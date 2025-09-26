@@ -20,6 +20,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* NAV */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -74,13 +75,21 @@ nav ul li a.active::after {
   transform-origin: left;
 }
 
+/* SECTIONS */
 section {
   padding: 100px 2rem 60px;
   max-width: 900px;
   margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Typography */
+/* TYPOGRAPHY */
 h1, h2 {
   font-weight: 900;
   text-transform: uppercase;
@@ -96,7 +105,7 @@ p {
   max-width: 600px;
 }
 
-/* Buttons */
+/* BUTTONS */
 a.button {
   display: inline-block;
   padding: 0.65rem 1.7rem;
@@ -113,7 +122,7 @@ a.button:hover {
   color: #000;
 }
 
-/* Cover Loader */
+/* COVER LOADER */
 #cover {
   position: fixed;
   top: 0; left: 0;
@@ -131,19 +140,23 @@ a.button:hover {
   margin-bottom: 1.5rem;
 }
 .loading-bar {
-  width: 200px; height: 6px;
+  width: 200px;
+  height: 6px;
   background: #222;
   border-radius: 4px;
   overflow: hidden;
 }
 .loading-bar div {
-  height: 100%; width: 0;
+  height: 100%;
+  width: 0;
   background: linear-gradient(90deg,#fff,#888);
   animation: load 1s forwards;
 }
-@keyframes load { to { width: 100%; } }
+@keyframes load {
+  to { width: 100%; }
+}
 
-/* Custom Cursor */
+/* CUSTOM CURSOR */
 .cursor {
   position: fixed;
   top: 0; left: 0;
@@ -172,7 +185,7 @@ a.button:hover {
   transition: box-shadow 0.3s ease;
 }
 
-/* Team */
+/* TEAM */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -186,18 +199,30 @@ a.button:hover {
   opacity: 0;
   transform: translateY(30px);
 }
-.team-member.visible { opacity: 1; transform: translateY(0); }
-.team-member img {
-  width: 100%; border-radius: 50%; margin-bottom: 1rem;
+.team-member.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
-.team-member h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
-.team-member p { margin: 0; font-size: 0.9rem; color: #bbb; }
+.team-member img {
+  width: 100%;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+.team-member h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+.team-member p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #bbb;
+}
 .team-member:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(255,255,255,0.1);
 }
 
-/* Stats */
+/* STATS */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -207,19 +232,30 @@ a.button:hover {
   border-top: 1px solid #222;
 }
 .stat h3 {
-  font-size: 2.5rem; font-weight: 900;
+  font-size: 2.5rem;
+  font-weight: 900;
 }
-.stat p { margin-top: 10px; font-size: 0.95rem; color: #bbb; }
-.stat { opacity: 0; transform: translateY(40px); transition: all 0.6s ease; }
-.stat.visible { opacity: 1; transform: translateY(0); }
+.stat p {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #bbb;
+}
+.stat {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+.stat.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* Project Grid + Cards */
+/* PROJECTS */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
-
 .project-item {
   background: #111;
   padding: 20px;
@@ -252,11 +288,7 @@ a.button:hover {
   letter-spacing: 0.05em;
 }
 
-/* Smooth fade-in sections */
-section { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
-section.visible { opacity: 1; transform: translateY(0); }
-
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 600px) {
   h1 { font-size: 2.5rem; }
   h2 { font-size: 1.6rem; }
