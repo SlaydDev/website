@@ -5,7 +5,7 @@ window.addEventListener("load", () => {
     setTimeout(() => {
       document.getElementById("cover").style.display = "none";
     }, 500);
-  }, 1000); // now 1s fast load
+  }, 1000);
 });
 
 // Cursor
