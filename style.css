@@ -299,6 +299,7 @@ a.button:hover {
 
 .blog-card h3 { margin-bottom: 0.25rem; }
 
+/* Author + small badge */
 .blog-card .author {
   font-size: 0.9rem;
   color: #bbb;
@@ -314,10 +315,16 @@ a.button:hover {
   vertical-align: middle;
 }
 
+/* Preview content clipped */
 .blog-card .content {
   margin-top: 0.5rem;
   font-size: 0.95rem;
   color: #ccc;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* show only 4 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Carousel buttons */
@@ -370,6 +377,24 @@ a.button:hover {
 }
 
 .blog-overlay h2 { margin-bottom: 0.5rem; }
-.blog-overlay .author { margin-bottom: 1rem; }
-.blog-overlay .content { font-size: 1rem; line-height: 1.6; }
+
+/* Author + badge in overlay */
+.blog-overlay .author {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  display: inline;
+}
+
+.blog-overlay .author .badge-small {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-left: 0.25rem;
+  vertical-align: middle;
+}
+
+.blog-overlay .content {
+  font-size: 1rem;
+  line-height: 1.6;
+}
 
