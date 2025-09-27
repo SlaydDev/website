@@ -1,8 +1,9 @@
-// LOADER
+// script.js - Loader, cursor, sections, counters, and blog
+
+// Loader
 window.addEventListener("load", () => {
   const images = document.images;
   let loaded = 0;
-
   function hideCover() {
     setTimeout(() => {
       document.getElementById("cover").style.opacity = "0";
@@ -14,7 +15,6 @@ window.addEventListener("load", () => {
       }, 500);
     }, 300);
   }
-
   for (let i = 0; i < images.length; i++) {
     if (images[i].complete) loaded++;
     else images[i].addEventListener("load", () => {
@@ -22,12 +22,11 @@ window.addEventListener("load", () => {
       if (loaded === images.length) hideCover();
     });
   }
-
   if (loaded === images.length) hideCover();
   setTimeout(hideCover, 5000); // fallback
 });
 
-// CUSTOM CURSOR
+// Cursor
 const cursor = document.getElementById('cursor');
 window.addEventListener('mousemove', e => {
   cursor.style.left = e.clientX + 'px';
@@ -38,7 +37,7 @@ window.addEventListener('click', () => {
   setTimeout(() => cursor.classList.remove("click-glow"), 300);
 });
 
-// Cursor hover effects
+// Cursor hover
 const textHoverElems = document.querySelectorAll('p, a, h1, h2, li, span');
 const interactHoverElems = document.querySelectorAll('img, a.button, .project-item, .team-member');
 textHoverElems.forEach(el => {
@@ -50,7 +49,7 @@ interactHoverElems.forEach(el => {
   el.addEventListener('mouseleave', () => cursor.classList.remove('interact-hover'));
 });
 
-// Smooth scroll highlight
+// Scroll highlight
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('nav ul li a');
 function onScroll() {
@@ -64,7 +63,7 @@ function onScroll() {
 }
 window.addEventListener('scroll', onScroll);
 
-// Reveal animations
+// Reveal
 function revealOnScroll() {
   const elems = document.querySelectorAll('section, .team-member, .stat, .project-item');
   elems.forEach(el => {
@@ -102,7 +101,7 @@ function animateCounters() {
   }
 }
 
-// BLOG PREVIEW DYNAMIC
+// Blog Preview Dynamic
 async function loadBlogPreview() {
   const blogCarousel = document.getElementById("blogCarousel");
   const overlay = document.getElementById("blogOverlay");
@@ -118,8 +117,10 @@ async function loadBlogPreview() {
     card.className = "blog-card";
     card.innerHTML = `
       <h3>${post.title}</h3>
-      ${post.badge ? `<div class="badge-row"><img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}"></div>` : ''}
-      <p class="author">By ${post.author}</p>
+      <p class="author">
+        ${post.badge ? `<img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">` : ''}
+        By ${post.author}
+      </p>
     `;
     card.addEventListener('click', () => {
       overlayTitle.innerText = post.title;
