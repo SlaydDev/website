@@ -102,22 +102,45 @@ function animateCounters() {
   }
 }
 
-// BLOG PREVIEW
-function loadBlogPreview() {
+// BLOG PREVIEW DYNAMIC
+async function loadBlogPreview() {
   const blogCarousel = document.getElementById("blogCarousel");
-  const blogs = [
-    { title: "Blog Post 1", date: "Sep 27, 2025", content: "This is the first blog post." },
-    { title: "Blog Post 2", date: "Sep 25, 2025", content: "This is the second blog post." }
-  ];
+  const overlay = document.getElementById("blogOverlay");
+  const overlayTitle = document.getElementById("overlayTitle");
+  const overlayBadge = document.getElementById("overlayBadge");
+  const overlayContent = document.getElementById("overlayContent");
 
-  blogs.forEach(blog => {
+  const res = await fetch('/blog/posts.json');
+  const posts = await res.json();
+
+  posts.forEach(post => {
     const card = document.createElement("div");
     card.className = "blog-card";
     card.innerHTML = `
-      <h3>${blog.title}</h3>
-      <div class="meta">${blog.date}</div>
-      <p>${blog.content}</p>
+      <h3>${post.title}</h3>
+      ${post.badge ? `<div class="badge-row"><img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}"></div>` : ''}
+      <p class="author">By ${post.author}</p>
     `;
+    card.addEventListener('click', () => {
+      overlayTitle.innerText = post.title;
+      overlayBadge.innerHTML = post.badge ? `<img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}">` : '';
+      overlayContent.innerText = post.content;
+      overlay.style.display = "flex";
+    });
     blogCarousel.appendChild(card);
   });
+
+  // Overlay close
+  document.getElementById("closeOverlay").addEventListener('click', () => {
+    overlay.style.display = "none";
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === "Escape") overlay.style.display = "none";
+  });
+
+  // Carousel arrows
+  const prev = document.getElementById("blogPrev");
+  const next = document.getElementById("blogNext");
+  prev.addEventListener('click', () => blogCarousel.scrollBy({ left: -300, behavior: 'smooth' }));
+  next.addEventListener('click', () => blogCarousel.scrollBy({ left: 300, behavior: 'smooth' }));
 }
