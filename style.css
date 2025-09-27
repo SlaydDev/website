@@ -171,70 +171,127 @@ a.button:hover { background: #fff; color: #000; }
   border-top: 1px solid #222; border-bottom: 1px solid #222;
   margin-top: 60px; text-align: center;
 }
-.blog-carousel-container { position: relative; }
-.blog-carousel {
-  display: flex; overflow-x: hidden; gap: 1.5rem;
-  scroll-snap-type: x mandatory; padding-bottom: 1rem;
+/* BLOG CARDS */
+.blog-carousel-container {
+  position: relative;
+  margin-top: 2rem;
 }
+
+.blog-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+}
+
 .blog-card {
-  min-width: 250px;
-  max-width: 250px;
-  height: 250px;
-  background: #000;
+  flex: 0 0 300px; /* roughly square */
+  height: 300px;
+  background: #111;
   padding: 1rem;
   border-radius: 12px;
   text-align: left;
   scroll-snap-align: start;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
-.blog-card h3 { margin-bottom: 0.5rem; }
+
+.blog-card h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
 .blog-card .author {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  margin-bottom: 0.5rem;
   font-size: 0.9rem;
   color: #bbb;
-  margin-bottom: 0.5rem;
 }
-.blog-card .author img.badge-small { width: 20px; height: 20px; }
+
+.blog-card .author img.badge-small {
+  width: 20px;
+  height: 20px;
+  margin-left: 0.4rem;
+}
+
 .blog-card .content {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #ccc;
+  font-size: 0.95rem;
 }
 
-/* Overlay */
+/* BLOG OVERLAY */
 .blog-overlay {
   display: none;
-  position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: #111;
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: 0;
   z-index: 4000;
-  max-width: 900px;
-  max-height: 80vh;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
-  flex-direction: column;
 }
-.blog-overlay .badge-small { width: 25px; height: 25px; margin-left: 0.5rem; }
+
+.blog-overlay h2 {
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.blog-overlay .badge-small {
+  width: 25px;
+  height: 25px;
+  margin-left: 0.5rem;
+}
+
+.blog-overlay #overlayContent {
+  margin-top: 1rem;
+  color: #ccc;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* CLOSE BUTTON */
 .close-btn {
-  position: absolute; top: 1rem; right: 1rem;
-  background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
+
+/* CAROUSEL NAVIGATION ARROWS */
 .blog-prev, .blog-next {
-  position: absolute; top: 50%;
+  position: absolute;
+  top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.1); border: none; color: #fff; font-size: 2rem; cursor: pointer; padding: 0.5rem 1rem;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  z-index: 10;
 }
+
 .blog-prev { left: 0; }
 .blog-next { right: 0; }
 
 /* Hide scrollbars completely */
 .blog-carousel::-webkit-scrollbar { display: none; }
 .blog-carousel { -ms-overflow-style: none; scrollbar-width: none; }
+
