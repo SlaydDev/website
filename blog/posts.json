@@ -1,9 +1,16 @@
 [
   {
-    "title": "Police Week Tribute2",
+    "title": "Very First Post!",
+    "author": "Unknown",
+    "badge": "verified",
+    "content": "This is just a test post to see if the systems are working correctly. More posts coming in the near future!",
+    "slug": "very-first-post!"
+  },
+  {
+    "title": "First Post 01",
     "author": "Unknown",
     "badge": "Verified",
-    "content": "This is a test post. Thanks for viewing it.",
-    "slug": "police-week-tribute2"
+    "content": "This is a test post. Thanks for viewing it",
+    "slug": "first-post-01"
   }
 ]
