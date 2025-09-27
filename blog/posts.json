@@ -1,16 +1,9 @@
 [
   {
-    "title": "Very First Post!",
-    "author": "Unknown",
+    "title": "Attempt 907",
+    "author": "CaptainEXE",
     "badge": "verified",
-    "content": "This is just a test post to see if the systems are working correctly. More posts coming in the near future!",
-    "slug": "very-first-post!"
-  },
-  {
-    "title": "First Post 01",
-    "author": "Unknown",
-    "badge": "Verified",
-    "content": "This is a test post. Thanks for viewing it",
-    "slug": "first-post-01"
+    "content": "This is the 34th attempt to get this system to work",
+    "slug": "attempt-907"
   }
 ]
