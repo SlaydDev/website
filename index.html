@@ -64,57 +64,43 @@
   <section id="projects">
     <h2>projects</h2>
     <div class="project-grid">
- <div class="project-grid">
-  <div class="project-item" tabindex="0">
-    <img src="https://iili.io/KajEp8G.png" alt="Police Week 2025 Tribute" />
-    <span>Police Week 2025 Tribute</span>
-    <p>
-      A heartfelt tribute showcasing <strong>Flu0rine’s creative livery designs</strong>, 
-      <strong>Captain.EXE’s Blender vehicle models</strong>, and 
-      <strong>CodeX’s immersive map layout</strong>. This project honors service through 
-      cinematic visuals and custom-built assets.
-    </p>
-  </div>
-
-  <div class="project-item" tabindex="0">
-    <img src="https://iili.io/KajEV3u.png" alt="Dodge Hellcat Design" />
-    <span>Dodge Hellcat Design</span>
-    <p>
-      A high-impact showcase of <strong>Captain.EXE’s Blender mastery</strong>, 
-      pushing polygon precision and texture realism. This Hellcat model anchors our 
-      CSS-themed site templates and demonstrates our ability to blend design and dev 
-      into one seamless experience.
-    </p>
-  </div>
-
-  <div class="project-item" tabindex="0">
-    <span>CSS Theme Library</span>
-    <p>
-      A growing vault of custom CSS themes built for modern sites — clean, responsive, 
-      and cinematic. Designed to be plug-and-play for devs who want style without the fluff.
-    </p>
-  </div>
-</div>
+      <div class="project-item" tabindex="0">
+        <img src="https://iili.io/KajEp8G.png" alt="Police Week 2025 Tribute" />
+        <span>Police Week 2025 Tribute</span>
+        <p>A heartfelt tribute showcasing <strong>Flu0rine’s creative livery designs</strong>, <strong>Captain.EXE’s Blender vehicle models</strong>, and <strong>CodeX’s immersive map layout</strong>. This project honors service through cinematic visuals and custom-built assets.</p>
+      </div>
+      <div class="project-item" tabindex="0">
+        <img src="https://iili.io/KajEV3u.png" alt="Dodge Hellcat Design" />
+        <span>Dodge Hellcat Design</span>
+        <p>A high-impact showcase of <strong>Captain.EXE’s Blender mastery</strong>, pushing polygon precision and texture realism. This Hellcat model anchors our CSS-themed site templates and demonstrates our ability to blend design and dev into one seamless experience.</p>
+      </div>
+      <div class="project-item" tabindex="0">
+        <span>CSS Theme Library</span>
+        <p>A growing vault of custom CSS themes built for modern sites — clean, responsive, and cinematic. Designed to be plug-and-play for devs who want style without the fluff.</p>
+      </div>
     </div>
   </section>
 
+  <!-- BLOG SECTION -->
+  <section id="blog" class="blog-preview">
+    <h2>blog</h2>
+    <div id="blogCard" class="blog-card"></div>
+    <a href="/blog/index.html" class="button">view all posts</a>
+  </section>
+
+  <!-- BLOG OVERLAY -->
+  <div class="blog-overlay" id="blogOverlay">
+    <button class="close-btn" id="closeOverlay">✕</button>
+    <h2 id="overlayTitle"></h2>
+    <div class="badge-row" id="overlayBadge"></div>
+    <p id="overlayContent"></p>
+  </div>
+
   <section id="stats" class="stats">
-    <div class="stat">
-      <h3 class="counter" data-target="0">0</h3>
-      <p>Server Members</p>
-    </div>
-    <div class="stat">
-      <h3 class="counter" data-target="0">0</h3>
-      <p>Projects Done</p>
-    </div>
-    <div class="stat">
-      <h3 class="counter" data-target="0">0</h3>
-      <p>Ongoing Projects</p>
-    </div>
-    <div class="stat">
-      <h3 class="counter" data-target="0">0</h3>
-      <p>Happy Customers</p>
-    </div>
+    <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Server Members</p></div>
+    <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Projects Done</p></div>
+    <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Ongoing Projects</p></div>
+    <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Happy Customers</p></div>
   </section>
 
   <section id="contact" class="contact">
@@ -123,8 +109,6 @@
   </section>
 
   <script src="script.js"></script>
-
-  <!-- Google Sheets Integration -->
   <script>
     window.addEventListener('load', () => {
       fetch('https://script.google.com/macros/s/AKfycbwV7Z-kiiRDK6XeIQDy2-MTefdsqZEOdwaBx2WLEEjpQkN9IcNmfMp42N8JwJ013ueHjA/exec')
