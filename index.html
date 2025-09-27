@@ -1,5 +1,3 @@
-<!-- index.html - Main site layout including blog section -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +17,6 @@
 
   <div class="cursor" id="cursor"></div>
 
-  <!-- Navigation -->
   <nav>
     <div class="logo">Slayd.DEV</div>
     <ul>
@@ -32,7 +29,6 @@
     </ul>
   </nav>
 
-  <!-- Sections -->
   <section id="home">
     <h1>we are <span style="color:transparent;">Slayd.</span> <br> <span style="color:#fff;">slayd.</span></h1>
     <p>building sharp, intentional, no-bull web experiences.</p>
@@ -89,19 +85,11 @@
   <section id="blog" class="blog-preview">
     <h2>blog</h2>
     <div class="blog-carousel-container">
-      <button class="arrow left" id="blogPrev">‹</button>
-      <div id="blogCarousel" class="blog-carousel"></div>
-      <button class="arrow right" id="blogNext">›</button>
+      <div class="blog-carousel" id="blogCarousel">
+        <!-- Blog cards will be injected dynamically from posts.json -->
+      </div>
     </div>
   </section>
-
-  <!-- BLOG OVERLAY -->
-  <div class="blog-overlay" id="blogOverlay">
-    <button class="close-btn" id="closeOverlay">✕</button>
-    <h2 id="overlayTitle"></h2>
-    <div class="badge-row" id="overlayBadge"></div>
-    <div id="overlayContent"></div>
-  </div>
 
   <section id="stats" class="stats">
     <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Server Members</p></div>
