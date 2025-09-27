@@ -1,11 +1,29 @@
-// LOADER
+// LOADER with layout stability
 window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("cover").style.opacity = "0";
+  const images = document.images;
+  let loaded = 0;
+
+  for (let i = 0; i < images.length; i++) {
+    if (images[i].complete) loaded++;
+    else images[i].addEventListener("load", () => {
+      loaded++;
+      if (loaded === images.length) hideCover();
+    });
+  }
+
+  if (loaded === images.length) hideCover();
+
+  function hideCover() {
     setTimeout(() => {
-      document.getElementById("cover").style.display = "none";
-    }, 500);
-  }, 1000);
+      document.getElementById("cover").style.opacity = "0";
+      setTimeout(() => {
+        document.getElementById("cover").style.display = "none";
+        revealOnScroll();
+        animateCounters();
+        loadBlogPreview();
+      }, 500);
+    }, 300);
+  }
 });
 
 // Cursor
@@ -22,7 +40,6 @@ window.addEventListener('click', () => {
 // Cursor modes
 const textHoverElems = document.querySelectorAll('p, a, h1, h2, li, span');
 const interactHoverElems = document.querySelectorAll('img, a.button, .project-item, .team-member');
-
 textHoverElems.forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('text-hover'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('text-hover'));
@@ -35,7 +52,6 @@ interactHoverElems.forEach(el => {
 // Smooth scroll highlight
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('nav ul li a');
-
 function onScroll() {
   let scrollPos = window.scrollY + window.innerHeight / 3;
   sections.forEach((section, i) => {
@@ -62,7 +78,6 @@ window.addEventListener("scroll", revealOnScroll);
 // Counters
 const counters = document.querySelectorAll(".counter");
 let countersStarted = false;
-
 function animateCounters() {
   if (countersStarted) return;
   const statsSection = document.querySelector("#stats");
@@ -91,12 +106,39 @@ window.addEventListener("scroll", animateCounters);
 
 // Initial reveal on load
 document.addEventListener("DOMContentLoaded", revealOnScroll);
-// Blog overlay logic with dynamic fetch
-fetch('/blog/posts.json')
-  .then(res => res.json())
-  .then(posts => {
-    const latest = posts[0];
-    const blogCard = document.getElementById('blogCard');
-    blogCard.innerHTML = `
-      <h3>${latest.title} →</h3>
-      <p>By ${latest.author}</p
+
+// Blog preview loader
+function loadBlogPreview() {
+  fetch('/blog/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      const latest = posts[0];
+      const blogCard = document.getElementById('blogCard');
+      blogCard.innerHTML = `
+        <h3>${latest.title} →</h3>
+        <p>By ${latest.author}</p>
+        <div class="badge-row">
+          <img src="/badges/${latest.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${latest.badge}">
+        </div>
+      `;
+
+      blogCard.addEventListener('click', () => {
+        document.getElementById('overlayTitle').textContent = latest.title;
+        document.getElementById('overlayContent').textContent = latest.content;
+        document.getElementById('overlayBadge').innerHTML = `
+          <img src="/badges/${latest.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${latest.badge}">
+        `;
+        document.getElementById('blogOverlay').classList.add('active');
+      });
+
+      document.getElementById('closeOverlay').addEventListener('click', () => {
+        document.getElementById('blogOverlay').classList.remove('active');
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          document.getElementById('blogOverlay').classList.remove('active');
+        }
+      });
+    });
+}
