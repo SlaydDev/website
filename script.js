@@ -91,3 +91,12 @@ window.addEventListener("scroll", animateCounters);
 
 // Initial reveal on load
 document.addEventListener("DOMContentLoaded", revealOnScroll);
+// Blog overlay logic with dynamic fetch
+fetch('/blog/posts.json')
+  .then(res => res.json())
+  .then(posts => {
+    const latest = posts[0];
+    const blogCard = document.getElementById('blogCard');
+    blogCard.innerHTML = `
+      <h3>${latest.title} →</h3>
+      <p>By ${latest.author}</p
