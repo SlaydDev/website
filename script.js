@@ -114,20 +114,18 @@ function loadBlogPreview() {
     .then(posts => {
       const latest = posts[0];
       const blogCard = document.getElementById('blogCard');
+      const author = latest.author || 'CaptainEXE';
+      const badge = latest.badge ? `<img src="/badges/${latest.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${latest.badge}" class="inline-badge">` : '';
+
       blogCard.innerHTML = `
         <h3>${latest.title} →</h3>
-        <p>By ${latest.author}</p>
-        <div class="badge-row">
-          <img src="/badges/${latest.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${latest.badge}">
-        </div>
+        <p>By ${author} ${badge}</p>
       `;
 
       blogCard.addEventListener('click', () => {
         document.getElementById('overlayTitle').textContent = latest.title;
         document.getElementById('overlayContent').textContent = latest.content;
-        document.getElementById('overlayBadge').innerHTML = `
-          <img src="/badges/${latest.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${latest.badge}">
-        `;
+        document.getElementById('overlayBadge').innerHTML = badge;
         document.getElementById('blogOverlay').classList.add('active');
       });
 
