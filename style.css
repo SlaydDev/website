@@ -165,18 +165,11 @@ a.button:hover { background: #fff; color: #000; }
   color: #fff; font-size: 0.95rem; letter-spacing: 0.05em;
 }
 
-/* BLOG */
-.blog-preview {
-  background: #111; padding: 80px 2rem;
-  border-top: 1px solid #222; border-bottom: 1px solid #222;
-  margin-top: 60px; text-align: center;
-}
 /* BLOG CARDS */
 .blog-carousel-container {
   position: relative;
   margin-top: 2rem;
 }
-
 .blog-carousel {
   display: flex;
   overflow-x: auto;
@@ -184,9 +177,8 @@ a.button:hover { background: #fff; color: #000; }
   scroll-snap-type: x mandatory;
   padding-bottom: 1rem;
 }
-
 .blog-card {
-  flex: 0 0 300px; /* roughly square */
+  flex: 0 0 300px;
   height: 300px;
   background: #111;
   padding: 1rem;
@@ -198,100 +190,52 @@ a.button:hover { background: #fff; color: #000; }
   flex-direction: column;
   overflow: hidden;
 }
+.blog-card h3 { margin-bottom: 0.3rem; font-size: 1.1rem; color: #fff; }
+.blog-card .author { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.9rem; color: #bbb; }
+.blog-card .author img.badge-small { width: 20px; height: 20px; margin-left: 0.4rem; }
+.blog-card .content { flex: 1; overflow: hidden; text-overflow: ellipsis; color: #ccc; font-size: 0.95rem; }
 
-.blog-card h3 {
-  margin-bottom: 0.3rem;
-  font-size: 1.1rem;
-  color: #fff;
-}
-
-.blog-card .author {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: #bbb;
-}
-
-.blog-card .author img.badge-small {
-  width: 20px;
-  height: 20px;
-  margin-left: 0.4rem;
-}
-
-.blog-card .content {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #ccc;
-  font-size: 0.95rem;
-}
-
-/* BLOG OVERLAY */
+/* BLOG OVERLAY FULLSCREEN */
 .blog-overlay {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   background: #111;
   padding: 2rem;
-  border-radius: 0;
+  margin: 0; border-radius: 0;
   z-index: 4000;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  display: flex; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden;
 }
-
-.blog-overlay h2 {
-  margin-bottom: 0.5rem;
-  color: #fff;
+.blog-overlay-header {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  margin-bottom: 1rem;
 }
-
-.blog-overlay .badge-small {
-  width: 25px;
-  height: 25px;
-  margin-left: 0.5rem;
-}
-
+.blog-overlay h2 { color: #fff; margin: 0; font-size: 1.8rem; }
+.blog-overlay .author { color: #bbb; font-size: 1rem; display: flex; align-items: center; }
+.blog-overlay .author img.badge-small { width: 25px; height: 25px; margin-left: 0.5rem; }
 .blog-overlay #overlayContent {
-  margin-top: 1rem;
-  color: #ccc;
-  font-size: 1rem;
-  line-height: 1.6;
+  margin-top: 1rem; color: #ccc; font-size: 1rem; line-height: 1.6;
+  flex: 1; overflow-y: auto;
 }
 
 /* CLOSE BUTTON */
 .close-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.5rem;
-  cursor: pointer;
+  position: fixed; top: 1rem; right: 1rem;
+  background: none; border: none;
+  color: #fff; font-size: 1.5rem; cursor: pointer;
 }
 
-/* CAROUSEL NAVIGATION ARROWS */
+/* CAROUSEL ARROWS */
 .blog-prev, .blog-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.1);
-  border: none;
-  color: #fff;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  z-index: 10;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.1); border: none; color: #fff;
+  font-size: 2rem; cursor: pointer; padding: 0.5rem 1rem; z-index: 10;
 }
-
 .blog-prev { left: 0; }
 .blog-next { right: 0; }
 
 /* Hide scrollbars completely */
 .blog-carousel::-webkit-scrollbar { display: none; }
 .blog-carousel { -ms-overflow-style: none; scrollbar-width: none; }
-
