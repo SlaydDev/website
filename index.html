@@ -81,20 +81,24 @@
     </div>
   </section>
 
-  <!-- BLOG SECTION -->
-  <section id="blog" class="blog-preview">
-    <h2>blog</h2>
+<!-- BLOG SECTION -->
+<section id="blog" class="blog-preview">
+  <h2>blog</h2>
+  <div class="blog-carousel-container">
+    <button class="arrow left" id="blogPrev">‹</button>
     <div id="blogCarousel" class="blog-carousel"></div>
-    <a href="/blog/index.html" class="button">view all posts</a>
-  </section>
-
-  <!-- BLOG OVERLAY -->
-  <div class="blog-overlay" id="blogOverlay">
-    <button class="close-btn" id="closeOverlay">✕</button>
-    <h2 id="overlayTitle"></h2>
-    <div class="badge-row" id="overlayBadge"></div>
-    <div id="overlayContent"></div>
+    <button class="arrow right" id="blogNext">›</button>
   </div>
+</section>
+
+<!-- BLOG OVERLAY -->
+<div class="blog-overlay" id="blogOverlay">
+  <button class="close-btn" id="closeOverlay">✕</button>
+  <h2 id="overlayTitle"></h2>
+  <div class="badge-row" id="overlayBadge"></div>
+  <div id="overlayContent"></div>
+</div>
+
 
   <section id="stats" class="stats">
     <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Server Members</p></div>
@@ -111,3 +115,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
