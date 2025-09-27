@@ -1,147 +1,65 @@
-// script.js - Loader, cursor, sections, counters, and blog
-
-// Loader
+// LOADER
 window.addEventListener("load", () => {
   const images = document.images;
   let loaded = 0;
-  function hideCover() {
-    setTimeout(() => {
-      document.getElementById("cover").style.opacity = "0";
-      setTimeout(() => {
-        document.getElementById("cover").style.display = "none";
-        revealOnScroll();
-        animateCounters();
-        loadBlogPreview();
-      }, 500);
-    }, 300);
+  for (let i=0;i<images.length;i++){
+    if(images[i].complete) loaded++; 
+    else images[i].addEventListener("load",()=>{loaded++;});
   }
-  for (let i = 0; i < images.length; i++) {
-    if (images[i].complete) loaded++;
-    else images[i].addEventListener("load", () => {
-      loaded++;
-      if (loaded === images.length) hideCover();
+  setTimeout(()=>{document.getElementById("cover").style.display="none"; revealOnScroll(); animateCounters(); initBlog();},500);
+});
+
+// CURSOR
+const cursor=document.getElementById('cursor');
+window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px';});
+window.addEventListener('click',()=>{cursor.classList.add("click-glow"); setTimeout(()=>cursor.classList.remove("click-glow"),300);});
+
+// SCROLL REVEAL
+function revealOnScroll(){const elems=document.querySelectorAll('section,.team-member,.stat,.project-item'); elems.forEach(el=>{const rect=el.getBoundingClientRect(); if(rect.top<window.innerHeight-60) el.classList.add("visible");});}
+window.addEventListener("scroll",revealOnScroll);
+
+// COUNTERS
+const counters=document.querySelectorAll(".counter"); let countersStarted=false;
+function animateCounters(){if(countersStarted) return; counters.forEach(c=>{const target=+c.getAttribute('data-target'); let count=0; const interval=setInterval(()=>{count+=Math.ceil(target/100); if(count>=target){count=target; clearInterval(interval);} c.textContent=count;},10);}); countersStarted=true;}
+
+// BLOG
+function initBlog(){
+  const carousel=document.querySelector('.blog-carousel');
+  const prevBtn=document.createElement('button');
+  prevBtn.className='blog-prev'; prevBtn.innerHTML='&#8249;';
+  const nextBtn=document.createElement('button');
+  nextBtn.className='blog-next'; nextBtn.innerHTML='&#8250;';
+  document.querySelector('.blog-preview').appendChild(prevBtn);
+  document.querySelector('.blog-preview').appendChild(nextBtn);
+
+  prevBtn.addEventListener('click',()=>{carousel.scrollBy({left:-300, behavior:'smooth'});});
+  nextBtn.addEventListener('click',()=>{carousel.scrollBy({left:300, behavior:'smooth'});});
+
+  // overlay
+  const overlay=document.createElement('div'); overlay.className='blog-overlay';
+  overlay.innerHTML='<button class="close-btn">✕</button><div class="overlay-content"></div>';
+  document.body.appendChild(overlay);
+  const overlayContent=overlay.querySelector('.overlay-content');
+  const closeBtn=overlay.querySelector('.close-btn');
+
+  fetch('blog/posts.json').then(res=>res.json()).then(posts=>{
+    carousel.innerHTML='';
+    posts.forEach(post=>{
+      const card=document.createElement('div'); card.className='blog-card';
+      card.innerHTML=`<h3>${post.title}</h3>
+        <p class="author">${post.author}${post.badge?` <img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" class="badge-small">`:''}</p>
+        <div class="content">${post.content}</div>`;
+      carousel.appendChild(card);
+
+      card.addEventListener('click',()=>{
+        overlay.style.display='flex';
+        overlayContent.innerHTML=`<h2>${post.title}</h2>
+          <p class="author">${post.author}${post.badge?` <img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" class="badge-small">`:''}</p>
+          <div class="content">${post.content}</div>`;
+      });
     });
-  }
-  if (loaded === images.length) hideCover();
-  setTimeout(hideCover, 5000); // fallback
-});
-
-// Cursor
-const cursor = document.getElementById('cursor');
-window.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-window.addEventListener('click', () => {
-  cursor.classList.add("click-glow");
-  setTimeout(() => cursor.classList.remove("click-glow"), 300);
-});
-
-// Cursor hover
-const textHoverElems = document.querySelectorAll('p, a, h1, h2, li, span');
-const interactHoverElems = document.querySelectorAll('img, a.button, .project-item, .team-member');
-textHoverElems.forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('text-hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('text-hover'));
-});
-interactHoverElems.forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('interact-hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('interact-hover'));
-});
-
-// Scroll highlight
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('nav ul li a');
-function onScroll() {
-  let scrollPos = window.scrollY + window.innerHeight / 3;
-  sections.forEach((section, i) => {
-    if (scrollPos >= section.offsetTop) {
-      navLinks.forEach(link => link.classList.remove('active'));
-      if (navLinks[i]) navLinks[i].classList.add('active');
-    }
-  });
-}
-window.addEventListener('scroll', onScroll);
-
-// Reveal
-function revealOnScroll() {
-  const elems = document.querySelectorAll('section, .team-member, .stat, .project-item');
-  elems.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 60) {
-      el.classList.add("visible");
-    }
-  });
-}
-window.addEventListener("scroll", revealOnScroll);
-
-// Counters
-const counters = document.querySelectorAll(".counter");
-let countersStarted = false;
-function animateCounters() {
-  if (countersStarted) return;
-  const statsSection = document.querySelector("#stats");
-  const sectionTop = statsSection.getBoundingClientRect().top;
-  if (sectionTop < window.innerHeight - 50) {
-    counters.forEach(counter => {
-      const updateCount = () => {
-        const target = +counter.getAttribute('data-target');
-        const count = +counter.innerText;
-        const increment = target / 100;
-        if (count < target) {
-          counter.innerText = Math.ceil(count + increment);
-          requestAnimationFrame(updateCount);
-        } else {
-          counter.innerText = target;
-        }
-      };
-      updateCount();
-    });
-    countersStarted = true;
-  }
-}
-
-// Blog Preview Dynamic
-async function loadBlogPreview() {
-  const blogCarousel = document.getElementById("blogCarousel");
-  const overlay = document.getElementById("blogOverlay");
-  const overlayTitle = document.getElementById("overlayTitle");
-  const overlayBadge = document.getElementById("overlayBadge");
-  const overlayContent = document.getElementById("overlayContent");
-
-  const res = await fetch('/blog/posts.json');
-  const posts = await res.json();
-
-  posts.forEach(post => {
-    const card = document.createElement("div");
-    card.className = "blog-card";
-    card.innerHTML = `
-      <h3>${post.title}</h3>
-      <p class="author">
-        ${post.badge ? `<img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">` : ''}
-        By ${post.author}
-      </p>
-    `;
-    card.addEventListener('click', () => {
-      overlayTitle.innerText = post.title;
-      overlayBadge.innerHTML = post.badge ? `<img src="/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}">` : '';
-      overlayContent.innerText = post.content;
-      overlay.style.display = "flex";
-    });
-    blogCarousel.appendChild(card);
   });
 
-  // Overlay close
-  document.getElementById("closeOverlay").addEventListener('click', () => {
-    overlay.style.display = "none";
-  });
-  document.addEventListener('keydown', e => {
-    if(e.key === "Escape") overlay.style.display = "none";
-  });
-
-  // Carousel arrows
-  const prev = document.getElementById("blogPrev");
-  const next = document.getElementById("blogNext");
-  prev.addEventListener('click', () => blogCarousel.scrollBy({ left: -300, behavior: 'smooth' }));
-  next.addEventListener('click', () => blogCarousel.scrollBy({ left: 300, behavior: 'smooth' }));
+  closeBtn.addEventListener('click',()=>overlay.style.display='none');
+  window.addEventListener('keydown',e=>{if(e.key==='Escape') overlay.style.display='none';});
 }
