@@ -1,17 +1,7 @@
-// LOADER with layout stability
+// LOADER
 window.addEventListener("load", () => {
   const images = document.images;
   let loaded = 0;
-
-  for (let i = 0; i < images.length; i++) {
-    if (images[i].complete) loaded++;
-    else images[i].addEventListener("load", () => {
-      loaded++;
-      if (loaded === images.length) hideCover();
-    });
-  }
-
-  if (loaded === images.length) hideCover();
 
   function hideCover() {
     setTimeout(() => {
@@ -24,9 +14,20 @@ window.addEventListener("load", () => {
       }, 500);
     }, 300);
   }
+
+  for (let i = 0; i < images.length; i++) {
+    if (images[i].complete) loaded++;
+    else images[i].addEventListener("load", () => {
+      loaded++;
+      if (loaded === images.length) hideCover();
+    });
+  }
+
+  if (loaded === images.length) hideCover();
+  setTimeout(hideCover, 5000); // fallback
 });
 
-// Cursor
+// CUSTOM CURSOR
 const cursor = document.getElementById('cursor');
 window.addEventListener('mousemove', e => {
   cursor.style.left = e.clientX + 'px';
@@ -37,7 +38,7 @@ window.addEventListener('click', () => {
   setTimeout(() => cursor.classList.remove("click-glow"), 300);
 });
 
-// Cursor modes
+// Cursor hover effects
 const textHoverElems = document.querySelectorAll('p, a, h1, h2, li, span');
 const interactHoverElems = document.querySelectorAll('img, a.button, .project-item, .team-member');
 textHoverElems.forEach(el => {
@@ -83,4 +84,40 @@ function animateCounters() {
   const statsSection = document.querySelector("#stats");
   const sectionTop = statsSection.getBoundingClientRect().top;
   if (sectionTop < window.innerHeight - 50) {
-    counters
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / 100;
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+    countersStarted = true;
+  }
+}
+
+// BLOG PREVIEW
+function loadBlogPreview() {
+  const blogCarousel = document.getElementById("blogCarousel");
+  const blogs = [
+    { title: "Blog Post 1", date: "Sep 27, 2025", content: "This is the first blog post." },
+    { title: "Blog Post 2", date: "Sep 25, 2025", content: "This is the second blog post." }
+  ];
+
+  blogs.forEach(blog => {
+    const card = document.createElement("div");
+    card.className = "blog-card";
+    card.innerHTML = `
+      <h3>${blog.title}</h3>
+      <div class="meta">${blog.date}</div>
+      <p>${blog.content}</p>
+    `;
+    blogCarousel.appendChild(card);
+  });
+}
