@@ -109,17 +109,5 @@
   </section>
 
   <script src="script.js"></script>
-  <script>
-    window.addEventListener('load', () => {
-      fetch('https://script.google.com/macros/s/AKfycbwV7Z-kiiRDK6XeIQDy2-MTefdsqZEOdwaBx2WLEEjpQkN9IcNmfMp42N8JwJ013ueHjA/exec')
-        .then(res => res.json())
-        .then(data => {
-          const counters = document.querySelectorAll('.stat .counter');
-          counters[1].setAttribute("data-target", data.ProjectsDone);
-          counters[2].setAttribute("data-target", data.OngoingProjects);
-          counters[3].setAttribute("data-target", data.HappyCustomers);
-        });
-    });
-  </script>
 </body>
 </html>
