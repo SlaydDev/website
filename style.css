@@ -165,65 +165,40 @@ a.button:hover { background: #fff; color: #000; }
   color: #fff; font-size: 0.95rem; letter-spacing: 0.05em;
 }
 
-/* BLOG CARDS */
-.blog-carousel-container { position: relative; margin-top: 2rem; }
+/* BLOG */
+.blog-preview {
+  background: #111; padding: 80px 2rem;
+  border-top: 1px solid #222; border-bottom: 1px solid #222;
+  margin-top: 60px; text-align: center;
+}
 .blog-carousel {
-  display: flex;
-  overflow-x: auto;
-  gap: 1.5rem;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 1rem;
+  display: flex; overflow-x: auto; gap: 1.5rem;
+  scroll-snap-type: x mandatory; padding-bottom: 1rem;
 }
 .blog-card {
-  flex: 0 0 300px;
-  height: 300px;
-  background: #111;
-  padding: 1rem;
-  border-radius: 12px;
-  text-align: left;
-  scroll-snap-align: start;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  min-width: 300px; min-height: 300px; flex: 0 0 auto;
+  background: #000; padding: 1.5rem; border-radius: 12px;
+  text-align: left; scroll-snap-align: start;
+  cursor: pointer; transition: transform 0.3s ease;
 }
-.blog-card h3 { margin-bottom: 0.3rem; font-size: 1.1rem; color: #fff; }
+.blog-card:hover { transform: scale(1.03); }
+.blog-card h3 { margin-bottom: 0.5rem; }
 .blog-card .author {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: #bbb;
+  display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;
+  font-size: 0.9rem; color: #bbb;
 }
-.blog-card .author img.badge-small { width: 20px; height: 20px; margin-left: 0.4rem; }
-.blog-card .content {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #ccc;
-  font-size: 0.95rem;
-}
+.blog-card .author img.badge-small { width: 20px; height: 20px; }
 
-/* BLOG OVERLAY FULLSCREEN */
+/* BLOG OVERLAY */
 .blog-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: #111;
-  padding: 2rem;
-  margin: 0; border-radius: 0;
-  z-index: 4000;
-  display: flex; flex-direction: column;
-  overflow-y: auto; overflow-x: hidden;
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.95); display: none; flex-direction: column;
+  justify-content: flex-start; align-items: center; padding: 4rem 2rem;
+  z-index: 5000; overflow-y: auto;
 }
-.blog-overlay-header {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.blog-overlay h2 { color: #fff; margin: 0; font-size: 1.8rem; }
-.blog-overlay .author { color: #bbb; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-.blog-overlay .author img.badge-small { width: 20px; height: 20px; }
+.blog-overlay h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+#overlayAuthor { font-size: 1rem; color: #ccc; display: flex; align-items: center; gap: 0.5rem; }
+#overlayBadge { width: 20px; height: 20px; margin-left: 0.5rem; }
 #overlayContent { margin-top: 1rem; color: #ccc; font-size: 1rem; }
 
 /* BLOG OVERLAY ESC BUTTON */
@@ -234,21 +209,7 @@ a.button:hover { background: #fff; color: #000; }
   cursor: pointer;
 }
 
-/* Carousel Arrows */
-.blog-prev, .blog-next {
-  position: absolute; top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.1);
-  border: 1px solid #fff;
-  color: #fff;
-  font-size: 1.5rem;
-  padding: 0.2rem 0.5rem;
-  cursor: pointer;
-  z-index: 100;
-}
-.blog-prev { left: 0; }
-.blog-next { right: 0; }
-
-/* Hide scrollbars */
+/* Carousel Arrows (optional for later) */
 .blog-carousel::-webkit-scrollbar { display: none; }
 .blog-carousel { -ms-overflow-style: none; scrollbar-width: none; }
+
