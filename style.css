@@ -166,10 +166,7 @@ a.button:hover { background: #fff; color: #000; }
 }
 
 /* BLOG CARDS */
-.blog-carousel-container {
-  position: relative;
-  margin-top: 2rem;
-}
+.blog-carousel-container { position: relative; margin-top: 2rem; }
 .blog-carousel {
   display: flex;
   overflow-x: auto;
@@ -191,9 +188,21 @@ a.button:hover { background: #fff; color: #000; }
   overflow: hidden;
 }
 .blog-card h3 { margin-bottom: 0.3rem; font-size: 1.1rem; color: #fff; }
-.blog-card .author { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.9rem; color: #bbb; }
+.blog-card .author {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #bbb;
+}
 .blog-card .author img.badge-small { width: 20px; height: 20px; margin-left: 0.4rem; }
-.blog-card .content { flex: 1; overflow: hidden; text-overflow: ellipsis; color: #ccc; font-size: 0.95rem; }
+.blog-card .content {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ccc;
+  font-size: 0.95rem;
+}
 
 /* BLOG OVERLAY FULLSCREEN */
 .blog-overlay {
@@ -213,29 +222,33 @@ a.button:hover { background: #fff; color: #000; }
   margin-bottom: 1rem;
 }
 .blog-overlay h2 { color: #fff; margin: 0; font-size: 1.8rem; }
-.blog-overlay .author { color: #bbb; font-size: 1rem; display: flex; align-items: center; }
-.blog-overlay .author img.badge-small { width: 25px; height: 25px; margin-left: 0.5rem; }
-.blog-overlay #overlayContent {
-  margin-top: 1rem; color: #ccc; font-size: 1rem; line-height: 1.6;
-  flex: 1; overflow-y: auto;
-}
+.blog-overlay .author { color: #bbb; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.blog-overlay .author img.badge-small { width: 20px; height: 20px; }
+#overlayContent { margin-top: 1rem; color: #ccc; font-size: 1rem; }
 
-/* CLOSE BUTTON */
-.close-btn {
+/* BLOG OVERLAY ESC BUTTON */
+.blog-overlay .close-btn {
   position: fixed; top: 1rem; right: 1rem;
-  background: none; border: none;
-  color: #fff; font-size: 1.5rem; cursor: pointer;
+  background: transparent; border: 1px solid #fff;
+  color: #fff; font-size: 0.9rem; padding: 0.2rem 0.5rem;
+  cursor: pointer;
 }
 
-/* CAROUSEL ARROWS */
+/* Carousel Arrows */
 .blog-prev, .blog-next {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  background: rgba(255,255,255,0.1); border: none; color: #fff;
-  font-size: 2rem; cursor: pointer; padding: 0.5rem 1rem; z-index: 10;
+  position: absolute; top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  z-index: 100;
 }
 .blog-prev { left: 0; }
 .blog-next { right: 0; }
 
-/* Hide scrollbars completely */
+/* Hide scrollbars */
 .blog-carousel::-webkit-scrollbar { display: none; }
 .blog-carousel { -ms-overflow-style: none; scrollbar-width: none; }
