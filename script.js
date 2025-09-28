@@ -37,7 +37,7 @@ window.addEventListener('click', () => {
   setTimeout(() => cursor.classList.remove("click-glow"), 300);
 });
 
-// Hover effects
+// Hover
 const textHoverElems = document.querySelectorAll('p, a, h1, h2, li, span');
 const interactHoverElems = document.querySelectorAll('img, a.button, .project-item, .team-member');
 textHoverElems.forEach(el => {
@@ -75,6 +75,36 @@ function revealOnScroll() {
 }
 window.addEventListener("scroll", revealOnScroll);
 
+// Blog carousel
+let posts = [
+  { title: "Example Post", author: "Captain.EXE", badge: "verified.png", content: "Sample text here..." }
+];
+function loadBlogPreview() {
+  const carousel = document.getElementById("blogCarousel");
+  posts.forEach((post, i) => {
+    const card = document.createElement("div");
+    card.className = "blog-card";
+    card.innerHTML = `
+      <h3>${post.title}</h3>
+      <div class="author">${post.author} <img class="badge-small" src="${post.badge}" alt="badge"></div>
+      <p>${post.content.substring(0, 120)}...</p>
+    `;
+    card.addEventListener("click", () => openOverlay(post));
+    carousel.appendChild(card);
+  });
+}
+
+function openOverlay(post) {
+  const overlay = document.getElementById("blogOverlay");
+  document.getElementById("overlayTitle").innerText = post.title;
+  document.getElementById("overlayAuthor").innerHTML = `${post.author} <img class="badge-small" src="${post.badge}" alt="badge">`;
+  document.getElementById("overlayContent").innerText = post.content;
+  overlay.style.display = "flex";
+}
+document.getElementById("closeOverlay").addEventListener("click", () => {
+  document.getElementById("blogOverlay").style.display = "none";
+});
+
 // Counters
 const counters = document.querySelectorAll(".counter");
 let countersStarted = false;
@@ -84,74 +114,19 @@ function animateCounters() {
   const sectionTop = statsSection.getBoundingClientRect().top;
   if (sectionTop < window.innerHeight - 50) {
     counters.forEach(counter => {
-      let target = +counter.dataset.target;
+      const target = +counter.dataset.target;
       let count = 0;
-      let step = Math.ceil(target / 200);
-      let interval = setInterval(() => {
+      const step = target / 100;
+      const interval = setInterval(() => {
         count += step;
         if (count >= target) {
-          counter.textContent = target;
+          count = target;
           clearInterval(interval);
-        } else counter.textContent = count;
-      }, 10);
+        }
+        counter.innerText = Math.floor(count);
+      }, 20);
     });
     countersStarted = true;
   }
 }
-
-// BLOG
-function loadBlogPreview() {
-  fetch("blog/posts.json")
-    .then(res => res.json())
-    .then(posts => {
-      const container = document.getElementById("blogCarousel");
-      container.innerHTML = "";
-
-      posts.forEach(post => {
-        const card = document.createElement("div");
-        card.className = "blog-card";
-
-        const title = document.createElement("h3");
-        title.textContent = post.title;
-
-        const author = document.createElement("div");
-        author.className = "author";
-        author.textContent = post.author;
-        if (post.badge) {
-          const img = document.createElement("img");
-          img.className = "badge-small";
-          img.src = `/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png`;
-          author.appendChild(img);
-        }
-
-        const content = document.createElement("div");
-        content.className = "content";
-        content.textContent = post.content;
-
-        card.appendChild(title);
-        card.appendChild(author);
-        card.appendChild(content);
-
-        card.addEventListener("click", () => openOverlay(post));
-
-        container.appendChild(card);
-      });
-    });
-}
-
-const overlay = document.getElementById("blogOverlay");
-function openOverlay(post) {
-  overlay.style.display = "flex";
-  document.getElementById("overlayTitle").textContent = post.title;
-  document.getElementById("overlayAuthor").textContent = post.author;
-  const badge = document.getElementById("overlayBadge");
-  if(post.badge){
-    badge.src = `/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png`;
-    badge.style.display = "inline-block";
-  } else badge.style.display = "none";
-  document.getElementById("overlayContent").textContent = post.content;
-}
-
-// Close overlay
-document.getElementById("closeOverlay").addEventListener("click", () => overlay.style.display="none");
-window.addEventListener("keydown", e => { if(e.key==="Escape") overlay.style.display="none"; });
+window.addEventListener("scroll", animateCounters);
