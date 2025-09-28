@@ -84,18 +84,17 @@
   <!-- BLOG SECTION -->
   <section id="blog" class="blog-preview">
     <h2>blog</h2>
-    <div class="blog-carousel-container">
-      <div id="blogCarousel" class="blog-carousel"></div>
-    </div>
-
-    <!-- BLOG OVERLAY -->
-    <div class="blog-overlay" id="blogOverlay">
-      <button class="close-btn" id="closeOverlay">✕</button>
-      <h2 id="overlayTitle"></h2>
-      <div class="badge-row" id="overlayBadge"></div>
-      <div id="overlayContent"></div>
-    </div>
+    <div id="blogCarousel" class="blog-carousel"></div>
   </section>
+
+  <!-- BLOG OVERLAY -->
+  <div class="blog-overlay" id="blogOverlay">
+    <button class="close-btn" id="closeOverlay">ESC</button>
+    <h2 id="overlayTitle"></h2>
+    <div class="author" id="overlayAuthor"></div>
+    <img id="overlayBadge" class="badge-small" />
+    <div id="overlayContent"></div>
+  </div>
 
   <section id="stats" class="stats">
     <div class="stat"><h3 class="counter" data-target="0">0</h3><p>Server Members</p></div>
