@@ -147,7 +147,7 @@ scrollBtn.addEventListener('click', () => {
 });
 
 // ===========================
-// BLOG FETCH + MODAL
+// BLOG FETCH + MODAL WITH BADGES
 // ===========================
 const blogGrid = document.querySelector('.blog-grid');
 const blogModal = document.createElement('div');
@@ -166,17 +166,37 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
     posts.forEach(post => {
       const card = document.createElement('div');
       card.className = 'blog-card';
+
+      // Badge image or author text
+      const badgeHTML = post.badge
+        ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">`
+        : `<span class="author-badge">${post.author}</span>`;
+
       card.innerHTML = `
-        <h4>${post.title}<span class="author-badge">${post.badge || post.author}</span></h4>
+        <h4>${post.title} ${badgeHTML}</h4>
         <p>${post.content.split('\n').slice(0,4).join('\n')}...</p>
       `;
+
+      // Open modal on click
       card.addEventListener('click', () => {
-        modalContent.innerHTML = `<h2>${post.title}</h2><p>${post.content.replace(/\n/g,'<br>')}</p>`;
+        const modalBadgeHTML = post.badge
+          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">`
+          : `<span class="author-badge">${post.author}</span>`;
+
+        modalContent.innerHTML = `
+          <h2>${post.title} ${modalBadgeHTML}</h2>
+          <p>${post.content.replace(/\n/g,'<br>')}</p>
+        `;
         blogModal.classList.add('active');
       });
+
       blogGrid.appendChild(card);
     });
-  });
+
+    // Optional toast notification
+    showToast("Blog posts loaded successfully!");
+  })
+  .catch(err => console.error("Failed to fetch blog posts:", err));
 
 // ===========================
 // MINI-GAME / EASTER EGG
@@ -256,7 +276,3 @@ function showToast(msg) {
   setTimeout(() => toast.style.opacity = '1', 50);
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast),300); }, 4000);
 }
-
-// Example: Toast on blog loaded
-showToast("Blog posts loaded successfully!");
-
