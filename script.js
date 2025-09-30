@@ -139,8 +139,7 @@ teamMembers.forEach(member => {
 // ===========================
 const scrollBtn = document.getElementById('scrollTopBtn');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) scrollBtn.style.display = 'block';
-  else scrollBtn.style.display = 'none';
+  scrollBtn.style.display = (window.scrollY > 300) ? 'block' : 'none';
 });
 scrollBtn.addEventListener('click', () => {
   window.scrollTo({top:0, behavior:'smooth'});
@@ -170,7 +169,7 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
       // Badge image or author text
       const badgeHTML = post.badge
         ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">`
-        : `<span class="author-badge">${post.author}</span>`;
+        : (post.author ? `<span class="author-badge">${post.author}</span>` : `<span class="author-badge">Unknown</span>`);
 
       card.innerHTML = `
         <h4>${post.title} ${badgeHTML}</h4>
@@ -181,7 +180,7 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
       card.addEventListener('click', () => {
         const modalBadgeHTML = post.badge
           ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">`
-          : `<span class="author-badge">${post.author}</span>`;
+          : (post.author ? `<span class="author-badge">${post.author}</span>` : `<span class="author-badge">Unknown</span>`);
 
         modalContent.innerHTML = `
           <h2>${post.title} ${modalBadgeHTML}</h2>
@@ -193,7 +192,7 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
       blogGrid.appendChild(card);
     });
 
-    // Optional toast notification
+    // Toast notification
     showToast("Blog posts loaded successfully!");
   })
   .catch(err => console.error("Failed to fetch blog posts:", err));
