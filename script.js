@@ -160,7 +160,7 @@ blogModal.addEventListener('click', (e) => {
   if (e.target === blogModal) blogModal.classList.remove('active');
 });
 
-fetch('https://script.google.com/macros/s/AKfycbxNFm6DAAHSw74RPs25nMlEyKnS1Xq2i7gPUCLGAR4cKWvuRuT7OtQYcaleXUQH2ps_/exec')
+fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxba4hP-d51e7DevdPQTdD9p1zDB0M-2W4wUC/exec')
   .then(res => res.json())
   .then(posts => {
     posts.forEach(post => {
@@ -259,3 +259,4 @@ function showToast(msg) {
 
 // Example: Toast on blog loaded
 showToast("Blog posts loaded successfully!");
+
