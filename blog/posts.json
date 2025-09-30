@@ -1,5 +1,12 @@
 [
   {
+    "title": "testing",
+    "author": "CaptainEXE",
+    "badge": "verified",
+    "content": "Test 01",
+    "slug": "testing"
+  },
+  {
     "title": "First Post (Attempt 9)",
     "author": "CaptainEXE",
     "badge": "verified",
