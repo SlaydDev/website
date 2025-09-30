@@ -168,8 +168,8 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
 
       // Badge image or author text
       const badgeHTML = post.badge
-        ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">`
-        : (post.author ? `<span class="author-badge">${post.author}</span>` : `<span class="author-badge">Unknown</span>`);
+        ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
+        : `by ${post.author || "Unknown"}`;
 
       card.innerHTML = `
         <h4>${post.title} ${badgeHTML}</h4>
@@ -179,8 +179,8 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
       // Open modal on click
       card.addEventListener('click', () => {
         const modalBadgeHTML = post.badge
-          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" class="badge-small">`
-          : (post.author ? `<span class="author-badge">${post.author}</span>` : `<span class="author-badge">Unknown</span>`);
+          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
+          : `by ${post.author || "Unknown"}`;
 
         modalContent.innerHTML = `
           <h2>${post.title} ${modalBadgeHTML}</h2>
@@ -192,7 +192,6 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
       blogGrid.appendChild(card);
     });
 
-    // Toast notification
     showToast("Blog posts loaded successfully!");
   })
   .catch(err => console.error("Failed to fetch blog posts:", err));
