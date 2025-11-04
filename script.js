@@ -68,10 +68,14 @@ window.addEventListener("scroll", revealOnScroll);
 document.addEventListener("DOMContentLoaded", revealOnScroll);
 
 // ===========================
-// COUNTERS
+// COUNTERS (FIXED VERSION)
 // ===========================
 const counters = document.querySelectorAll(".counter");
 let countersStarted = false;
+
+function sanitizeNumber(numStr) {
+  return parseInt(numStr.replace(/[^\d]/g, "")) || 0;
+}
 
 function animateCounters() {
   if (countersStarted) return;
@@ -80,16 +84,16 @@ function animateCounters() {
   if (sectionTop < window.innerHeight - 50) {
     countersStarted = true;
     counters.forEach(counter => {
-      const target = +counter.getAttribute("data-target");
+      const target = sanitizeNumber(counter.getAttribute("data-target"));
       let count = 0;
       const increment = target / 200;
       function updateCounter() {
         count += increment;
         if (count < target) {
-          counter.textContent = Math.ceil(count);
+          counter.textContent = Math.ceil(count).toLocaleString();
           requestAnimationFrame(updateCounter);
         } else {
-          counter.textContent = target;
+          counter.textContent = target.toLocaleString();
         }
       }
       updateCounter();
@@ -98,19 +102,22 @@ function animateCounters() {
   }
 }
 window.addEventListener("scroll", animateCounters);
+document.addEventListener("DOMContentLoaded", animateCounters);
 
 // ===========================
-// FETCH COUNTERS FROM GOOGLE SHEET
+// FETCH COUNTERS FROM GOOGLE SHEET (FIXED)
 // ===========================
 window.addEventListener('load', () => {
   fetch('https://script.google.com/macros/s/AKfycbwG3r12rcr5XF0O6VbVdkvWXY-lp64NztseAPcdo3c1YVa_v4IlEIjSSLWzfi7t342vag/exec')
     .then(res => res.json())
     .then(data => {
       const counters = document.querySelectorAll('.stat .counter');
-      counters[1].setAttribute("data-target", data.ProjectsDone);
-      counters[2].setAttribute("data-target", data.OngoingProjects);
-      counters[3].setAttribute("data-target", data.HappyCustomers);
-    });
+      if (data.ProjectsDone) counters[1].setAttribute("data-target", data.ProjectsDone);
+      if (data.OngoingProjects) counters[2].setAttribute("data-target", data.OngoingProjects);
+      countersStarted = false; // re-enable animation if already scrolled
+      animateCounters();
+    })
+    .catch(err => console.error("Counter fetch failed:", err));
 });
 
 // ===========================
@@ -142,7 +149,7 @@ window.addEventListener('scroll', () => {
   scrollBtn.style.display = (window.scrollY > 300) ? 'block' : 'none';
 });
 scrollBtn.addEventListener('click', () => {
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // ===========================
@@ -166,25 +173,23 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
       const card = document.createElement('div');
       card.className = 'blog-card';
 
-      // Badge image or author text
       const badgeHTML = post.badge
-        ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
+        ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
         : `by ${post.author || "Unknown"}`;
 
       card.innerHTML = `
         <h4>${post.title} ${badgeHTML}</h4>
-        <p>${post.content.split('\n').slice(0,4).join('\n')}...</p>
+        <p>${post.content.split('\n').slice(0, 4).join('\n')}...</p>
       `;
 
-      // Open modal on click
       card.addEventListener('click', () => {
         const modalBadgeHTML = post.badge
-          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
+          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
           : `by ${post.author || "Unknown"}`;
 
         modalContent.innerHTML = `
           <h2>${post.title} ${modalBadgeHTML}</h2>
-          <p>${post.content.replace(/\n/g,'<br>')}</p>
+          <p>${post.content.replace(/\n/g, '<br>')}</p>
         `;
         blogModal.classList.add('active');
       });
@@ -219,12 +224,12 @@ gameCanvas.addEventListener('click', () => {
 });
 
 function runGame() {
-  if (!gameActive) { ctx.clearRect(0,0,200,200); return; }
-  ctx.clearRect(0,0,200,200);
+  if (!gameActive) { ctx.clearRect(0, 0, 200, 200); return; }
+  ctx.clearRect(0, 0, 200, 200);
   ctx.fillStyle = '#fff';
   const x = Math.random() * 180;
   const y = Math.random() * 180;
-  ctx.fillRect(x,y,20,20);
+  ctx.fillRect(x, y, 20, 20);
   requestAnimationFrame(runGame);
 }
 
@@ -272,5 +277,5 @@ function showToast(msg) {
   toast.style.transition = 'opacity 0.3s ease';
   document.body.appendChild(toast);
   setTimeout(() => toast.style.opacity = '1', 50);
-  setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast),300); }, 4000);
+  setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast), 300); }, 4000);
 }
