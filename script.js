@@ -68,7 +68,7 @@ window.addEventListener("scroll", revealOnScroll);
 document.addEventListener("DOMContentLoaded", revealOnScroll);
 
 // ===========================
-// COUNTERS (FIXED VERSION)
+// COUNTERS (FINAL FIXED VERSION)
 // ===========================
 const counters = document.querySelectorAll(".counter");
 let countersStarted = false;
@@ -81,6 +81,7 @@ function animateCounters() {
   if (countersStarted) return;
   const statsSection = document.querySelector("#stats");
   const sectionTop = statsSection.getBoundingClientRect().top;
+
   if (sectionTop < window.innerHeight - 50) {
     countersStarted = true;
     counters.forEach(counter => {
@@ -105,16 +106,18 @@ window.addEventListener("scroll", animateCounters);
 document.addEventListener("DOMContentLoaded", animateCounters);
 
 // ===========================
-// FETCH COUNTERS FROM GOOGLE SHEET (FIXED)
+// FETCH COUNTERS (DYNAMIC ONLY FOR SOME STATS)
 // ===========================
-window.addEventListener('load', () => {
-  fetch('https://script.google.com/macros/s/AKfycbwG3r12rcr5XF0O6VbVdkvWXY-lp64NztseAPcdo3c1YVa_v4IlEIjSSLWzfi7t342vag/exec')
+window.addEventListener("load", () => {
+  fetch("https://script.google.com/macros/s/AKfycbwG3r12rcr5XF0O6VbVdkvWXY-lp64NztseAPcdo3c1YVa_v4IlEIjSSLWzfi7t342vag/exec")
     .then(res => res.json())
     .then(data => {
-      const counters = document.querySelectorAll('.stat .counter');
-      if (data.ProjectsDone) counters[1].setAttribute("data-target", data.ProjectsDone);
-      if (data.OngoingProjects) counters[2].setAttribute("data-target", data.OngoingProjects);
-      countersStarted = false; // re-enable animation if already scrolled
+      const counters = document.querySelectorAll(".stat .counter");
+      // Keep first two solid (GitHub Commits & Server Members)
+      if (data.ProjectsDone) counters[2].setAttribute("data-target", data.ProjectsDone);
+      if (data.OngoingProjects) counters[3].setAttribute("data-target", data.OngoingProjects);
+      if (data.HappyCustomers) counters[4].setAttribute("data-target", data.HappyCustomers);
+      countersStarted = false;
       animateCounters();
     })
     .catch(err => console.error("Counter fetch failed:", err));
@@ -172,31 +175,25 @@ fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxb
     posts.forEach(post => {
       const card = document.createElement('div');
       card.className = 'blog-card';
-
       const badgeHTML = post.badge
         ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
         : `by ${post.author || "Unknown"}`;
-
       card.innerHTML = `
         <h4>${post.title} ${badgeHTML}</h4>
         <p>${post.content.split('\n').slice(0, 4).join('\n')}...</p>
       `;
-
       card.addEventListener('click', () => {
         const modalBadgeHTML = post.badge
           ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g, '-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
           : `by ${post.author || "Unknown"}`;
-
         modalContent.innerHTML = `
           <h2>${post.title} ${modalBadgeHTML}</h2>
           <p>${post.content.replace(/\n/g, '<br>')}</p>
         `;
         blogModal.classList.add('active');
       });
-
       blogGrid.appendChild(card);
     });
-
     showToast("Blog posts loaded successfully!");
   })
   .catch(err => console.error("Failed to fetch blog posts:", err));
@@ -222,7 +219,6 @@ gameCanvas.addEventListener('click', () => {
   gameActive = !gameActive;
   if (gameActive) runGame();
 });
-
 function runGame() {
   if (!gameActive) { ctx.clearRect(0, 0, 200, 200); return; }
   ctx.clearRect(0, 0, 200, 200);
