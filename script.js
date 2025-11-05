@@ -208,8 +208,8 @@ function showToast(msg) {
 // ===========================
 const canvas = document.createElement('canvas');
 canvas.id = 'miniGame';
-canvas.width = 400;
-canvas.height = 400;
+canvas.width = 200;  // smaller canvas
+canvas.height = 200;
 canvas.style.position = 'fixed';
 canvas.style.bottom = '20px';
 canvas.style.right = '20px';
@@ -230,9 +230,9 @@ class Square {
     this.y = y;
     this.size = size;
     this.children = [];
-    this.imgX = imgX; // source x on image
-    this.imgY = imgY; // source y on image
-    this.imgSize = imgSize; // source size
+    this.imgX = imgX;
+    this.imgY = imgY;
+    this.imgSize = imgSize;
   }
 
   draw() {
@@ -283,3 +283,5 @@ canvas.addEventListener('mousemove', (e) => {
   const my = e.clientY - rect.top;
   squares.forEach(sq => sq.hover(mx, my));
 });
+
+
