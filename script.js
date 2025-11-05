@@ -202,3 +202,81 @@ function showToast(msg) {
   setTimeout(() => toast.style.opacity = '1', 50);
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast),300); }, 4000);
 }
+
+// ===========================
+// KOALAS-STYLE HOVER IMAGE EFFECT
+// ===========================
+const canvas = document.createElement('canvas');
+canvas.id = 'miniGame';
+canvas.width = 400;
+canvas.height = 400;
+canvas.style.position = 'fixed';
+canvas.style.bottom = '20px';
+canvas.style.right = '20px';
+canvas.style.zIndex = '5000';
+canvas.style.cursor = 'pointer';
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+
+const image = new Image();
+image.src = 'https://raw.githubusercontent.com/SlaydDev/website/main/badges/winter.png';
+
+const squares = [];
+const MIN_SIZE = 10;
+
+class Square {
+  constructor(x, y, size) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.children = [];
+  }
+
+  draw() {
+    if (this.children.length > 0) {
+      this.children.forEach(c => c.draw());
+    } else {
+      // Draw image portion
+      ctx.drawImage(
+        image,
+        this.x, this.y, this.size, this.size,
+        this.x, this.y, this.size, this.size
+      );
+    }
+  }
+
+  split() {
+    if (this.size / 2 >= MIN_SIZE && this.children.length === 0) {
+      const newSize = this.size / 2;
+      this.children.push(new Square(this.x, this.y, newSize));
+      this.children.push(new Square(this.x + newSize, this.y, newSize));
+      this.children.push(new Square(this.x, this.y + newSize, newSize));
+      this.children.push(new Square(this.x + newSize, this.y + newSize, newSize));
+    }
+  }
+
+  hover(mx, my) {
+    if (mx > this.x && mx < this.x + this.size && my > this.y && my < this.y + this.size) {
+      this.split();
+      this.children.forEach(c => c.hover(mx, my));
+    }
+  }
+}
+
+image.onload = () => {
+  squares.push(new Square(0, 0, canvas.width));
+  draw();
+};
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  squares.forEach(sq => sq.draw());
+  requestAnimationFrame(draw);
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  squares.forEach(sq => sq.hover(mx, my));
+});
