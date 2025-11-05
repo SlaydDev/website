@@ -204,12 +204,12 @@ function showToast(msg) {
 }
 
 // ===========================
-// KOALAS-STYLE HOVER IMAGE EFFECT (UPDATED)
+// KOALAS-STYLE HOVER IMAGE EFFECT (FIXED)
 // ===========================
 const canvas = document.createElement('canvas');
 canvas.id = 'miniGame';
-canvas.width = 250; // smaller
-canvas.height = 250; // smaller
+canvas.width = 250;
+canvas.height = 250;
 canvas.style.position = 'fixed';
 canvas.style.bottom = '20px';
 canvas.style.right = '20px';
@@ -255,6 +255,7 @@ class Square {
     this.imgX = imgX;
     this.imgY = imgY;
     this.imgSize = imgSize;
+    this.hovered = false; // track hover for gradual splitting
   }
 
   draw() {
@@ -282,9 +283,14 @@ class Square {
 
   hover(mx, my) {
     if (mx > this.x && mx < this.x + this.size && my > this.y && my < this.y + this.size) {
-      this.split();
-      this.children.forEach(c => c.hover(mx, my));
+      this.hovered = true;
     }
+    // gradually split if hovered
+    if (this.hovered && this.children.length === 0 && this.size / 2 >= MIN_SIZE) {
+      // only split 20% chance per frame to slow it down
+      if (Math.random() < 0.2) this.split();
+    }
+    this.children.forEach(c => c.hover(mx, my));
   }
 
   fullySplit() {
@@ -304,22 +310,30 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
+let hoverStarted = false;
+let finalShown = false;
+
 canvas.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
-  
-  // Random motivational message
+
+  if (!hoverStarted) hoverStarted = true;
+
+  // Show motivational message
   motivation.textContent = Math.random() > 0.5 ? "Almost there!" : "Keep going!";
   motivation.style.opacity = '1';
 
   squares.forEach(sq => sq.hover(mx, my));
 
-  // Check if all squares are split
-  if (squares.every(sq => sq.fullySplit())) {
-    finalMessage.textContent = "Congrats!";
-    finalMessage.style.opacity = '1';
-    motivation.style.opacity = '0';
+  // Only show final image once
+  if (!finalShown && squares.every(sq => sq.fullySplit())) {
+    finalShown = true;
+    setTimeout(() => {
+      finalMessage.textContent = "Congrats!";
+      finalMessage.style.opacity = '1';
+      motivation.style.opacity = '0';
+    }, 500); // slight delay
   }
 });
 
