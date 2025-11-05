@@ -225,21 +225,23 @@ const squares = [];
 const MIN_SIZE = 10;
 
 class Square {
-  constructor(x, y, size) {
+  constructor(x, y, size, imgX, imgY, imgSize) {
     this.x = x;
     this.y = y;
     this.size = size;
     this.children = [];
+    this.imgX = imgX; // source x on image
+    this.imgY = imgY; // source y on image
+    this.imgSize = imgSize; // source size
   }
 
   draw() {
     if (this.children.length > 0) {
       this.children.forEach(c => c.draw());
     } else {
-      // Draw image portion
       ctx.drawImage(
         image,
-        this.x, this.y, this.size, this.size,
+        this.imgX, this.imgY, this.imgSize, this.imgSize,
         this.x, this.y, this.size, this.size
       );
     }
@@ -248,10 +250,11 @@ class Square {
   split() {
     if (this.size / 2 >= MIN_SIZE && this.children.length === 0) {
       const newSize = this.size / 2;
-      this.children.push(new Square(this.x, this.y, newSize));
-      this.children.push(new Square(this.x + newSize, this.y, newSize));
-      this.children.push(new Square(this.x, this.y + newSize, newSize));
-      this.children.push(new Square(this.x + newSize, this.y + newSize, newSize));
+      const newImgSize = this.imgSize / 2;
+      this.children.push(new Square(this.x, this.y, newSize, this.imgX, this.imgY, newImgSize));
+      this.children.push(new Square(this.x + newSize, this.y, newSize, this.imgX + newImgSize, this.imgY, newImgSize));
+      this.children.push(new Square(this.x, this.y + newSize, newSize, this.imgX, this.imgY + newImgSize, newImgSize));
+      this.children.push(new Square(this.x + newSize, this.y + newSize, newSize, this.imgX + newImgSize, this.imgY + newImgSize, newImgSize));
     }
   }
 
@@ -264,7 +267,7 @@ class Square {
 }
 
 image.onload = () => {
-  squares.push(new Square(0, 0, canvas.width));
+  squares.push(new Square(0, 0, canvas.width, 0, 0, image.width));
   draw();
 };
 
