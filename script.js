@@ -204,10 +204,9 @@ function showToast(msg) {
 }
 
 // ===========================
-// KOALAS TO THE MAX STYLE
+// KOALAS TO THE MAX MOSAIC
 // ===========================
 const canvas = document.createElement('canvas');
-canvas.id = 'koalasCanvas';
 canvas.width = 250;
 canvas.height = 250;
 canvas.style.position = 'fixed';
@@ -218,10 +217,11 @@ canvas.style.cursor = 'pointer';
 document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d');
 
+// Load your uploaded image
 const image = new Image();
-image.src = 'https://raw.githubusercontent.com/SlaydDev/website/main/badges/winter.png';
+image.src = '/mnt/data/d081a5d2-7d57-4785-af23-5934db8e9b8a.png';
 
-const MIN_SIZE = 8; // smaller tiles for Koalas effect
+const MIN_SIZE = 8; // smallest tile size
 const squares = [];
 
 const motivation = document.createElement('div');
@@ -269,6 +269,13 @@ class Square {
     }
   }
 
+  hover(mx, my) {
+    if (mx > this.x && mx < this.x + this.size && my > this.y && my < this.y + this.size) {
+      this.split();
+    }
+    this.children.forEach(c => c.hover(mx, my));
+  }
+
   split() {
     if (this.size / 2 >= MIN_SIZE && this.children.length === 0) {
       const newSize = this.size / 2;
@@ -278,13 +285,6 @@ class Square {
       this.children.push(new Square(this.x, this.y + newSize, newSize, this.imgX, this.imgY + newImgSize, newImgSize));
       this.children.push(new Square(this.x + newSize, this.y + newSize, newSize, this.imgX + newImgSize, this.imgY + newImgSize, newImgSize));
     }
-  }
-
-  hover(mx, my) {
-    if (mx > this.x && mx < this.x + this.size && my > this.y && my < this.y + this.size) {
-      this.split();
-    }
-    this.children.forEach(c => c.hover(mx, my));
   }
 
   isFullySplit() {
@@ -324,4 +324,6 @@ canvas.addEventListener('mousemove', (e) => {
 canvas.addEventListener('mouseleave', () => {
   motivation.style.opacity = '0';
 });
+
+
 
