@@ -137,47 +137,61 @@ scrollBtn.addEventListener('click', () => {
 });
 
 // ===========================
-// BLOG FETCH + MODAL WITH BADGES
+// BLOG FETCH + MODAL (FIXED)
 // ===========================
-const blogGrid = document.querySelector('.blog-grid');
-const blogModal = document.createElement('div');
-blogModal.className = 'blog-modal';
-blogModal.innerHTML = `<div class="blog-modal-content"></div>`;
-document.body.appendChild(blogModal);
-const modalContent = blogModal.querySelector('.blog-modal-content');
+window.addEventListener("load", () => {
+  const blogGrid = document.querySelector('.blog-grid');
+  if (!blogGrid) return;
 
-blogModal.addEventListener('click', (e) => {
-  if (e.target === blogModal) blogModal.classList.remove('active');
-});
+  const blogModal = document.createElement('div');
+  blogModal.className = 'blog-modal';
+  blogModal.innerHTML = `<div class="blog-modal-content"></div>`;
+  document.body.appendChild(blogModal);
+  const modalContent = blogModal.querySelector('.blog-modal-content');
 
-fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxba4hP-d51e7DevdPQTdD9p1zDB0M-2W4wUC/exec')
-  .then(res => res.json())
-  .then(posts => {
-    posts.forEach(post => {
-      const card = document.createElement('div');
-      card.className = 'blog-card';
-      const badgeHTML = post.badge
-        ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
-        : `by ${post.author || "Unknown"}`;
-      card.innerHTML = `
-        <h4>${post.title} ${badgeHTML}</h4>
-        <p>${post.content.split('\n').slice(0,4).join('\n')}...</p>
-      `;
-      card.addEventListener('click', () => {
-        const modalBadgeHTML = post.badge
-          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;">`
+  blogModal.addEventListener('click', (e) => {
+    if (e.target === blogModal) blogModal.classList.remove('active');
+  });
+
+  fetch('https://script.google.com/macros/s/AKfycbzo3tjss4ow-r23cQB6cf4PqglEvPbVxba4hP-d51e7DevdPQTd9p1zDB0M-2W4wUC/exec')
+    .then(res => res.json())
+    .then(posts => {
+      if (!Array.isArray(posts)) throw new Error("Invalid posts data");
+
+      posts.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'blog-card';
+
+        const badgeHTML = post.badge
+          ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px;height:24px;vertical-align:middle;margin-left:5px;">`
           : `by ${post.author || "Unknown"}`;
-        modalContent.innerHTML = `
-          <h2>${post.title} ${modalBadgeHTML}</h2>
-          <p>${post.content.replace(/\n/g,'<br>')}</p>
+
+        const previewText = (post.content || "").split('\n').slice(0, 4).join('\n');
+
+        card.innerHTML = `
+          <h4>${post.title || "Untitled"} ${badgeHTML}</h4>
+          <p>${previewText || "No content available"}...</p>
         `;
-        blogModal.classList.add('active');
+
+        card.addEventListener('click', () => {
+          const modalBadgeHTML = post.badge
+            ? `<img src="https://raw.githubusercontent.com/SlaydDev/website/main/badges/${post.badge.toLowerCase().replace(/\s+/g,'-')}.png" alt="${post.badge}" style="width:24px;height:24px;vertical-align:middle;margin-left:5px;">`
+            : `by ${post.author || "Unknown"}`;
+
+          modalContent.innerHTML = `
+            <h2>${post.title || "Untitled"} ${modalBadgeHTML}</h2>
+            <p>${(post.content || "").replace(/\n/g,'<br>')}</p>
+          `;
+          blogModal.classList.add('active');
+        });
+
+        blogGrid.appendChild(card);
       });
-      blogGrid.appendChild(card);
-    });
-    showToast("Blog posts loaded successfully!");
-  })
-  .catch(err => console.error("Failed to fetch blog posts:", err));
+
+      if (typeof showToast === "function") showToast("Blog posts loaded successfully!");
+    })
+    .catch(err => console.error("Failed to fetch blog posts:", err));
+});
 
 // ===========================
 // MINI-GAME / EASTER EGG
