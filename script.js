@@ -204,12 +204,12 @@ function showToast(msg) {
 }
 
 // ===========================
-// KOALAS-STYLE HOVER IMAGE EFFECT
+// KOALAS-STYLE HOVER IMAGE EFFECT (UPDATED)
 // ===========================
 const canvas = document.createElement('canvas');
 canvas.id = 'miniGame';
-canvas.width = 200;  // smaller canvas
-canvas.height = 200;
+canvas.width = 250; // smaller
+canvas.height = 250; // smaller
 canvas.style.position = 'fixed';
 canvas.style.bottom = '20px';
 canvas.style.right = '20px';
@@ -223,6 +223,28 @@ image.src = 'https://raw.githubusercontent.com/SlaydDev/website/main/badges/wint
 
 const squares = [];
 const MIN_SIZE = 10;
+
+const motivation = document.createElement('div');
+motivation.style.position = 'absolute';
+motivation.style.bottom = '280px';
+motivation.style.right = '20px';
+motivation.style.color = '#fff';
+motivation.style.fontWeight = '700';
+motivation.style.fontSize = '1rem';
+motivation.style.opacity = '0';
+motivation.style.transition = 'opacity 0.3s';
+document.body.appendChild(motivation);
+
+const finalMessage = document.createElement('div');
+finalMessage.style.position = 'absolute';
+finalMessage.style.bottom = '20px';
+finalMessage.style.right = '20px';
+finalMessage.style.color = '#fff';
+finalMessage.style.fontWeight = '900';
+finalMessage.style.fontSize = '1.2rem';
+finalMessage.style.opacity = '0';
+finalMessage.style.transition = 'opacity 1s';
+document.body.appendChild(finalMessage);
 
 class Square {
   constructor(x, y, size, imgX, imgY, imgSize) {
@@ -264,6 +286,11 @@ class Square {
       this.children.forEach(c => c.hover(mx, my));
     }
   }
+
+  fullySplit() {
+    if (this.children.length === 0) return false;
+    return this.children.every(c => c.fullySplit());
+  }
 }
 
 image.onload = () => {
@@ -281,7 +308,21 @@ canvas.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
+  
+  // Random motivational message
+  motivation.textContent = Math.random() > 0.5 ? "Almost there!" : "Keep going!";
+  motivation.style.opacity = '1';
+
   squares.forEach(sq => sq.hover(mx, my));
+
+  // Check if all squares are split
+  if (squares.every(sq => sq.fullySplit())) {
+    finalMessage.textContent = "Congrats!";
+    finalMessage.style.opacity = '1';
+    motivation.style.opacity = '0';
+  }
 });
 
-
+canvas.addEventListener('mouseleave', () => {
+  motivation.style.opacity = '0';
+});
