@@ -178,7 +178,7 @@ fetch(blogURL)
       });
       blogGrid.appendChild(card);
     });
-    showToast("Blog posts loaded successfully!");
+    showToast("Clicking random things can reveal some easter eggs 👀");
   })
   .catch(err => console.error("Failed to fetch blog posts:", err));
 
@@ -202,6 +202,7 @@ function showToast(msg) {
   setTimeout(() => toast.style.opacity = '1', 50);
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast),300); }, 4000);
 }
+
 
 
 
