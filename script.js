@@ -202,6 +202,12 @@ function showToast(msg) {
   setTimeout(() => toast.style.opacity = '1', 50);
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast),300); }, 4000);
 }
+document.addEventListener('keydown', function(e) {
+  if(e.key === 'Escape') {
+    const modal = document.querySelector('.blog-modal.active');
+    if(modal) modal.classList.remove('active');
+  }
+});
 
 
 
