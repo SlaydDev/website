@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Captain Capture Archive</title>
+
+<style>
+body{
+background:#0b0b0b;
+color:#ddd;
+font-family:Segoe UI,sans-serif;
+padding:40px;
+}
+a{
+display:block;
+margin:8px 0;
+color:#9ecbff;
+text-decoration:none;
+}
+a:hover{ text-decoration:underline; }
+</style>
+
+<script>
+const PASSWORD = "CaptainSD";
+
+function unlock(){
+  const input = document.getElementById("pass").value;
+
+  if(input === PASSWORD){
+    document.getElementById("gate").style.display="none";
+    document.getElementById("content").style.display="block";
+  }else{
+    alert("wrong password");
+  }
+}
+</script>
+</head>
+
+<body>
+
+<div id="gate">
+<h2>Private Archive</h2>
+<input id="pass" type="password" placeholder="password">
+<button onclick="unlock()">enter</button>
+</div>
+
+<div id="content" style="display:none">
+
+<h1>Captures</h1>
+
+<a href="tahoe-winter.png">tahoe-winter.png</a>
+<a href="ladder-truck.png">ladder-truck.png</a>
+<a href="traffic-stop.mp4">traffic-stop.mp4</a>
+
+</div>
+
+</body>
+</html>
