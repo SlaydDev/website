@@ -15,11 +15,8 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   padding: 40px;
 }
-
 h1 {
   font-weight: 900;
   text-transform: uppercase;
@@ -29,8 +26,6 @@ h1 {
   color: #9c3cff;
   text-align: center;
 }
-
-/* gallery layout */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -38,7 +33,6 @@ h1 {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 .card {
   position: relative;
   overflow: hidden;
@@ -52,12 +46,10 @@ h1 {
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(156, 60, 255, 0.3);
 }
-
 .card img {
   width: 100%;
   display: block;
 }
-
 .watermark {
   position: absolute;
   bottom: 6px;
@@ -67,7 +59,6 @@ h1 {
   font-weight: bold;
   pointer-events: none;
 }
-
 .title {
   padding: 8px;
   text-align: center;
@@ -80,33 +71,40 @@ h1 {
 
 <h1>All the Memories</h1>
 
-<div class="gallery">
+<div class="gallery" id="gallery"></div>
 
-  <div class="card">
-    <img src="unmarked-tahoe-winter.png" alt="Unmarked Tahoe Winter">
-    <div class="watermark">CaptainEXE</div>
-    <div class="title">Unmarked Tahoe Winter</div>
-  </div>
+<script>
+// Load captures.json and build gallery
+fetch('captures.json')
+  .then(res => res.json())
+  .then(data => {
+    const gallery = document.getElementById('gallery');
+    data.files.forEach(file => {
+      const card = document.createElement('div');
+      card.className = 'card';
 
-  <div class="card">
-    <img src="classic-fd-truck.png" alt="Classic FD Truck">
-    <div class="watermark">CaptainEXE</div>
-    <div class="title">Classic FD Truck</div>
-  </div>
+      if(file.type === 'image') {
+        const img = document.createElement('img');
+        img.src = file.url;
+        img.alt = file.title;
+        card.appendChild(img);
+      }
 
-  <div class="card">
-    <img src="classic-fd-truck(with fire).png" alt="Classic FD Truck (with fire)">
-    <div class="watermark">CaptainEXE</div>
-    <div class="title">Classic FD Truck (with fire)</div>
-  </div>
+      const watermark = document.createElement('div');
+      watermark.className = 'watermark';
+      watermark.textContent = 'CaptainEXE';
 
-  <div class="card">
-    <img src="fd-ladder-truck(bucket).png" alt="FD Ladder Truck (bucket)">
-    <div class="watermark">CaptainEXE</div>
-    <div class="title">FD Ladder Truck (bucket)</div>
-  </div>
+      const title = document.createElement('div');
+      title.className = 'title';
+      title.textContent = file.title;
 
-</div>
+      card.appendChild(watermark);
+      card.appendChild(title);
+      gallery.appendChild(card);
+    });
+  })
+  .catch(err => console.error('Error loading captures.json:', err));
+</script>
 
 </body>
 </html>
