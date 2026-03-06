@@ -156,9 +156,7 @@ async function infiniteMessages(){
 while(infiniteMode){
 
 const msg = messages[Math.floor(Math.random()*messages.length)]
-
 terminal.textContent = msg
-
 await sleep(4000)
 
 }
@@ -166,13 +164,11 @@ await sleep(4000)
 }
 
 document.addEventListener("keydown",e=>{
-
 if(e.key==="`"){
 typing=false
 infiniteMode=true
 infiniteMessages()
 }
-
 })
 
 async function loadGallery(){
@@ -225,13 +221,22 @@ gallery.appendChild(card)
 
 })
 
+}
+
+async function start(){
+
+const minimumLoad = sleep(10000)  // 10 seconds
+const galleryLoad = loadGallery()
+
+await Promise.all([minimumLoad, galleryLoad])
+
 typing=false
 document.getElementById("loader").style.display="none"
 
 }
 
 typingLoop()
-loadGallery()
+start()
 
 </script>
 
