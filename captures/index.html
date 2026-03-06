@@ -3,150 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <title>All the Memories</title>
+
 <style>
-*,
-*::before,
-*::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
 body{
-  background:#000;
-  color:#fff;
-  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-  line-height:1.5;
-  overflow-x:hidden;
-  padding:40px;
+background:#000;
+color:#fff;
+font-family:monospace;
+margin:0;
+padding:40px;
 }
 
 h1{
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:0.1em;
-  margin-bottom:40px;
-  font-size:3.5rem;
-  color:#9c3cff;
-  text-align:center;
+text-align:center;
+color:#9c3cff;
+font-size:3rem;
+margin-bottom:40px;
 }
 
 .gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  gap:20px;
-  max-width:1200px;
-  margin:0 auto;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+gap:20px;
+max-width:1200px;
+margin:0 auto;
 }
 
 .card{
-  position:relative;
-  overflow:hidden;
-  border-radius:12px;
-  border:1px solid #2a1a3d;
-  background:#111;
-  cursor:pointer;
-  transition:transform .3s ease,box-shadow .3s ease;
+position:relative;
+overflow:hidden;
+border-radius:12px;
+border:1px solid #2a1a3d;
+background:#111;
+transition:0.3s;
 }
 
 .card:hover{
-  transform:scale(1.03);
-  box-shadow:0 8px 20px rgba(156,60,255,.3);
+transform:scale(1.03);
 }
 
 .card img{
-  width:100%;
-  display:block;
+width:100%;
+display:block;
 }
 
 .watermark{
-  position:absolute;
-  bottom:6px;
-  right:8px;
-  color:rgba(255,255,255,.5);
-  font-size:12px;
-  font-weight:bold;
-  pointer-events:none;
+position:absolute;
+bottom:6px;
+right:8px;
+color:rgba(255,255,255,0.6);
+font-size:12px;
 }
 
 .title{
-  padding:8px;
-  text-align:center;
-  color:#bbb;
-  font-size:14px;
+padding:8px;
+text-align:center;
+color:#bbb;
+font-size:14px;
 }
 
-/* viewer */
-.viewer{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.95);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+/* loader */
+
+#loader{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
 }
 
-.viewer img{
-  max-width:95%;
-  max-height:95%;
+#terminal{
+color:#9c3cff;
+font-size:18px;
+white-space:pre;
+text-align:center;
+max-width:700px;
 }
-
 </style>
 </head>
+
 <body>
 
-<h1>All the Memories</h1>
-
-<div class="gallery" id="gallery"></div>
-
-<div class="viewer" id="viewer">
-<img id="viewerImg">
+<div id="loader">
+<div id="terminal"></div>
 </div>
 
+<h1>All the Memories</h1>
+<div class="gallery" id="gallery"></div>
+
 <script>
-const viewer = document.getElementById('viewer')
-const viewerImg = document.getElementById('viewerImg')
 
-fetch('captures.json')
-.then(res => res.json())
-.then(data => {
+const messages = [
+'print("will this ever load?")',
+'print("still here?")',
+'print("please email me if your are stuck here")',
+'print("if you click random things you may find a secret feature")',
+'print("loaaaaaaaaaaaaaaaadddddddddddddddiiiiiiiiiiinnnnnnnnnnnnngggggggg")',
+'print("hello internet")',
+'print("if you are here too long buy more RAM (and please email me if you are stuck here)")',
+'print("i mean its still faster than a windows update")',
+'print(":D")',
+'print("in case you activate a secret easter egg click ` to stop seeing this - just kidding")',
+'print("i mean im gonna take my time")',
+'print("yup,yup just finishing my coffee")',
+'print("i might be ignoring you")'
+]
 
-  const gallery = document.getElementById('gallery')
+const terminal = document.getElementById("terminal")
 
-  data.files.forEach(file => {
+let typing = true
+let infiniteMode = false
 
-    const card = document.createElement('div')
-    card.className = 'card'
+function sleep(ms){
+return new Promise(r=>setTimeout(r,ms))
+}
 
-    const img = document.createElement('img')
-    img.src = file.url
-    img.alt = file.title
+async function typeMessage(msg){
 
-    img.onclick = () => {
-      viewer.style.display = 'flex'
-      viewerImg.src = file.url
-    }
+for(let i=0;i<=msg.length;i++){
+terminal.textContent = msg.slice(0,i)
+await sleep(35)
+}
 
-    const watermark = document.createElement('div')
-    watermark.className = 'watermark'
-    watermark.textContent = 'CaptainEXE'
+await sleep(800)
 
-    const title = document.createElement('div')
-    title.className = 'title'
-    title.textContent = file.title
+for(let i=msg.length;i>=0;i--){
+terminal.textContent = msg.slice(0,i)
+await sleep(15)
+}
 
-    card.appendChild(img)
-    card.appendChild(watermark)
-    card.appendChild(title)
+}
 
-    gallery.appendChild(card)
+async function typingLoop(){
 
-  })
+while(typing){
+
+for(const msg of messages){
+
+if(!typing) break
+await typeMessage(msg)
+
+}
+
+}
+
+}
+
+async function infiniteMessages(){
+
+while(infiniteMode){
+
+const msg = messages[Math.floor(Math.random()*messages.length)]
+
+terminal.textContent = msg
+
+await sleep(4000)
+
+}
+
+}
+
+document.addEventListener("keydown",e=>{
+
+if(e.key==="`"){
+typing=false
+infiniteMode=true
+infiniteMessages()
+}
 
 })
 
-viewer.onclick = () => {
-  viewer.style.display = 'none'
+async function loadGallery(){
+
+const res = await fetch("captures.json")
+const data = await res.json()
+
+const gallery = document.getElementById("gallery")
+
+const preload = data.files.map(file=>{
+return new Promise(resolve=>{
+const img = new Image()
+img.src = file.url
+img.onload = ()=>resolve(img)
+img.onerror = ()=>resolve(null)
+})
+})
+
+const images = await Promise.all(preload)
+
+images.forEach((img,i)=>{
+
+if(!img) return
+
+const file = data.files[i]
+
+const card = document.createElement("div")
+card.className="card"
+
+const link=document.createElement("a")
+link.href=file.url
+link.target="_blank"
+
+img.alt=file.title
+link.appendChild(img)
+
+const watermark=document.createElement("div")
+watermark.className="watermark"
+watermark.textContent="CaptainEXE"
+
+const title=document.createElement("div")
+title.className="title"
+title.textContent=file.title
+
+card.appendChild(link)
+card.appendChild(watermark)
+card.appendChild(title)
+
+gallery.appendChild(card)
+
+})
+
+typing=false
+document.getElementById("loader").style.display="none"
+
 }
+
+typingLoop()
+loadGallery()
+
 </script>
 
 </body>
