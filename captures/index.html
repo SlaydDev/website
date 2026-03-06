@@ -4,67 +4,92 @@
 <meta charset="UTF-8">
 <title>All the Memories</title>
 <style>
-/* Your site CSS */
 *,
 *::before,
-*::after { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+*::after { margin: 0; padding: 0; box-sizing: border-box; }
+
 html { scroll-behavior: smooth; }
-body {
-  background: #000;
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5;
-  overflow-x: hidden;
-  padding: 40px;
+
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  line-height:1.5;
+  overflow-x:hidden;
+  padding:40px;
 }
-h1 {
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 40px;
-  font-size: 3.5rem;
-  color: #9c3cff;
-  text-align: center;
+
+h1{
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin-bottom:40px;
+  font-size:3.5rem;
+  color:#9c3cff;
+  text-align:center;
 }
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:20px;
+  max-width:1200px;
+  margin:0 auto;
 }
-.card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid #2a1a3d;
-  background: #111;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+.card{
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid #2a1a3d;
+  background:#111;
+  cursor:pointer;
+  transition:transform .3s ease,box-shadow .3s ease;
 }
-.card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(156, 60, 255, 0.3);
+
+.card:hover{
+  transform:scale(1.03);
+  box-shadow:0 8px 20px rgba(156,60,255,.3);
 }
-.card img {
-  width: 100%;
-  display: block;
+
+.card img{
+  width:100%;
+  display:block;
 }
-.watermark {
-  position: absolute;
-  bottom: 6px;
-  right: 8px;
-  color: rgba(255,255,255,0.5);
-  font-size: 12px;
-  font-weight: bold;
-  pointer-events: none;
+
+.watermark{
+  position:absolute;
+  bottom:6px;
+  right:8px;
+  color:rgba(255,255,255,.5);
+  font-size:12px;
+  font-weight:bold;
+  pointer-events:none;
 }
-.title {
-  padding: 8px;
-  text-align: center;
-  color: #bbb;
-  font-size: 14px;
+
+.title{
+  padding:8px;
+  text-align:center;
+  color:#bbb;
+  font-size:14px;
 }
+
+/* viewer */
+.viewer{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.viewer img{
+  max-width:95%;
+  max-height:95%;
+}
+
 </style>
 </head>
 <body>
@@ -73,37 +98,55 @@ h1 {
 
 <div class="gallery" id="gallery"></div>
 
+<div class="viewer" id="viewer">
+<img id="viewerImg">
+</div>
+
 <script>
-// Load captures.json and build gallery
+const viewer = document.getElementById('viewer')
+const viewerImg = document.getElementById('viewerImg')
+
 fetch('captures.json')
-  .then(res => res.json())
-  .then(data => {
-    const gallery = document.getElementById('gallery');
-    data.files.forEach(file => {
-      const card = document.createElement('div');
-      card.className = 'card';
+.then(res => res.json())
+.then(data => {
 
-      if(file.type === 'image') {
-        const img = document.createElement('img');
-        img.src = file.url;
-        img.alt = file.title;
-        card.appendChild(img);
-      }
+  const gallery = document.getElementById('gallery')
 
-      const watermark = document.createElement('div');
-      watermark.className = 'watermark';
-      watermark.textContent = 'CaptainEXE';
+  data.files.forEach(file => {
 
-      const title = document.createElement('div');
-      title.className = 'title';
-      title.textContent = file.title;
+    const card = document.createElement('div')
+    card.className = 'card'
 
-      card.appendChild(watermark);
-      card.appendChild(title);
-      gallery.appendChild(card);
-    });
+    const img = document.createElement('img')
+    img.src = file.url
+    img.alt = file.title
+
+    img.onclick = () => {
+      viewer.style.display = 'flex'
+      viewerImg.src = file.url
+    }
+
+    const watermark = document.createElement('div')
+    watermark.className = 'watermark'
+    watermark.textContent = 'CaptainEXE'
+
+    const title = document.createElement('div')
+    title.className = 'title'
+    title.textContent = file.title
+
+    card.appendChild(img)
+    card.appendChild(watermark)
+    card.appendChild(title)
+
+    gallery.appendChild(card)
+
   })
-  .catch(err => console.error('Error loading captures.json:', err));
+
+})
+
+viewer.onclick = () => {
+  viewer.style.display = 'none'
+}
 </script>
 
 </body>
