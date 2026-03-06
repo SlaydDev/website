@@ -1,0 +1,6 @@
+{
+  "files": [
+    { "name": "Display Name", "file": "filename.png", "type": "image" },
+    { "name": "Another Clip", "file": "video.mp4", "type": "video" }
+  ]
+}
