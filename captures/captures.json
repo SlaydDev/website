@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "title": "Unmarked Tahoe Winter",
+      "url": "https://slayddev.vercel.app/captures/unmarked-tahoe-winter.png",
+      "type": "image"
+    },
+    {
+      "title": "Classic FD Truck",
+      "url": "https://slayddev.vercel.app/captures/classic-fd-truck.png",
+      "type": "image"
+    },
+    {
+      "title": "Classic FD Truck (with fire)",
+      "url": "https://slayddev.vercel.app/captures/classic-fd-truck(with fire).png",
+      "type": "image"
+    },
+    {
+      "title": "FD Ladder Truck (bucket)",
+      "url": "https://slayddev.vercel.app/captures/fd-ladder-truck(bucket).png",
+      "type": "image"
+    }
+  ]
+}
