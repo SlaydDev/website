@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /badges/
+Disallow: /badge/
+Disallow: /blog/
+
+Sitemap: https://slayddev.vercel.app/sitemap.xml
