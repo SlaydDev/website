@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects | CaptainEXE</title>
+  
+  <meta name="description" content="Explore all software, hardware, and digital projects by CaptainEXE.">
+  <meta name="author" content="CaptainEXE">
+  <link rel="canonical" href="https://thecaptainexe.vercel.app/projects">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thecaptainexe.vercel.app/projects">
+  <meta property="og:title" content="Projects | CaptainEXE">
+  <meta property="og:description" content="Explore all software, hardware, and digital projects by CaptainEXE.">
+  <meta property="og:image" content="https://thecaptainexe.vercel.app/assets/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://thecaptainexe.vercel.app/projects">
+  <meta name="twitter:title" content="Projects | CaptainEXE">
+  <meta name="twitter:description" content="Explore all software, hardware, and digital projects by CaptainEXE.">
+  <meta name="twitter:image" content="https://thecaptainexe.vercel.app/assets/logo.png">
+
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <nav>
+    <div class="logo">CaptainEXE</div>
+    <ul>
+      <li><a href="/">home</a></li>
+      <li><a href="/#about">about</a></li>
+      <li><a href="/projects" class="active">projects</a></li>
+      <li><a href="/#blog">blog</a></li>
+      <li><a href="/#stats">stats</a></li>
+      <li><a href="/contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="projects-page-container">
+    <h1>All Projects</h1>
+    <p class="section-subtitle">A complete list of repositories tagged with "project" pulled live from GitHub.</p>
+
+    <div class="all-projects-grid" id="allProjectsGrid">
+      <p style="color: #888;">Fetching projects from GitHub...</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; CaptainEXE 2026</p>
+  </footer>
+
+  <button id="scrollTopBtn">↑</button>
+
+  <script>
+    async function fetchTaggedProjects() {
+      const grid = document.getElementById('allProjectsGrid');
+      try {
+        const response = await fetch("https://api.github.com/users/TheCaptainEXE/repos?per_page=100");
+        const repos = await response.json();
+
+        grid.innerHTML = '';
+
+        if (!Array.isArray(repos)) {
+          throw new Error(repos.message || "GitHub API rate limit exceeded");
+        }
+
+        const taggedRepos = repos.filter(repo => repo.topics && repo.topics.includes("project"));
+
+        if (taggedRepos.length === 0) {
+          grid.innerHTML = `<p style="color: #888;">No repositories found with the "project" tag yet.</p>`;
+          return;
+        }
+
+        taggedRepos.forEach(repo => {
+          const card = document.createElement('a');
+          card.href = repo.html_url;
+          card.target = '_blank';
+          card.className = 'project-card-full';
+
+          card.innerHTML = `
+            <h3>${repo.name}</h3>
+            <p>${repo.description || "No description provided."}</p>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Failed to load GitHub projects:", err);
+        grid.innerHTML = `<p style="color: #ff5555;">GitHub rate limit reached (403). Please try again later or check out GitHub directly!</p>`;
+      }
+    }
+
+    fetchTaggedProjects();
+  </script>
+  <script src="../script.js"></script>
+</body>
+</html>

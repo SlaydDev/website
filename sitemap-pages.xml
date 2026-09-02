@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://slayddev.vercel.app/</loc>
+  </url>
+
+  <url>
+    <loc>https://slayddev.vercel.app/captures</loc>
+  </url>
+
+  <url>
+    <loc>https://slayddev.vercel.app/captures/index.html</loc>
+  </url>
+
+  <url>
+    <loc>https://slayddev.vercel.app/captures/clips/</loc>
+  </url>
+
+</urlset>

@@ -1,0 +1,17 @@
+[
+  {
+    "profile_image": "https://raw.githubusercontent.com/SlaydDev/website/main/badges/default.png",
+    "name": "Alex R.",
+    "testimonial": "An absolute powerhouse when it comes to clean architecture and fast delivery. Working together was seamless from start to finish."
+  },
+  {
+    "profile_image": "https://raw.githubusercontent.com/SlaydDev/website/main/badges/default.png",
+    "name": "Jordan M.",
+    "testimonial": "Incredible attention to detail. The UI design and performance tuning completely exceeded expectations."
+  },
+  {
+    "profile_image": "https://raw.githubusercontent.com/SlaydDev/website/main/badges/default.png",
+    "name": "Sam K.",
+    "testimonial": "Extremely talented developer with a sharp eye for modern aesthetics. The final product speaks for itself."
+  }
+]

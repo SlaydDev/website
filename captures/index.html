@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All the Memories</title>
+
+<style>
+body{
+background:#000;
+color:#fff;
+font-family:monospace;
+margin:0;
+padding:40px;
+}
+
+h1{
+text-align:center;
+color:#9c3cff;
+font-size:3rem;
+margin-bottom:40px;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+gap:20px;
+max-width:1200px;
+margin:0 auto;
+}
+
+.card{
+position:relative;
+overflow:hidden;
+border-radius:12px;
+border:1px solid #2a1a3d;
+background:#111;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.03);
+}
+
+.card img{
+width:100%;
+display:block;
+height: 200px;
+object-fit: cover;
+}
+
+.watermark{
+position:absolute;
+bottom:6px;
+right:8px;
+color:rgba(255,255,255,0.6);
+font-size:12px;
+}
+
+.title{
+padding:8px;
+text-align:center;
+color:#bbb;
+font-size:14px;
+}
+
+/* loader */
+#loader{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
+}
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #333;
+  border-top: 5px solid #9c3cff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* load more */
+.load-more-container {
+    text-align: center;
+    margin-top: 40px;
+}
+#loadMoreBtn {
+    background: #9c3cff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: monospace;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<h1>All the Memories</h1>
+<div class="gallery" id="gallery"></div>
+<div class="load-more-container">
+    <button id="loadMoreBtn">Load More</button>
+</div>
+
+<script>
+let allFiles = [];
+let displayedCount = 0;
+const pageSize = 12;
+const CDN_BASE = "https://cdn-captainexe.pages.dev/";
+
+async function loadGallery(){
+    const res = await fetch("captures.json");
+    const data = await res.json();
+    allFiles = data.files;
+    renderGallery();
+    document.getElementById("loader").style.display="none";
+}
+
+function renderGallery(){
+    const gallery = document.getElementById("gallery");
+    const end = Math.min(displayedCount + pageSize, allFiles.length);
+    
+    for(let i = displayedCount; i < end; i++){
+        const file = allFiles[i];
+        const fileName = file.url.split('/').pop();
+        const card = document.createElement("div");
+        card.className="card";
+        
+        const link = document.createElement("a");
+        link.href = CDN_BASE + fileName;
+        link.target="_blank";
+        
+        const img = new Image();
+        img.src = CDN_BASE + fileName;
+        img.onerror = function() {
+            this.src = "clips/" + fileName;
+            link.href = "clips/" + fileName;
+        };
+        
+        img.alt = file.title;
+        img.loading = "lazy";
+        link.appendChild(img);
+        card.innerHTML += `<div class="watermark">CaptainEXE</div><div class="title">${file.title}</div>`;
+        card.prepend(link);
+        gallery.appendChild(card);
+    }
+    displayedCount = end;
+    if(displayedCount >= allFiles.length) document.getElementById("loadMoreBtn").style.display = "none";
+}
+
+document.getElementById("loadMoreBtn").addEventListener("click", renderGallery);
+loadGallery();
+</script>
+
+</body>
+</html>

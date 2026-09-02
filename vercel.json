@@ -1,0 +1,72 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/projects",
+      "destination": "/projects/index.html",
+      "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html",
+      "permanent": false
+    },
+    {
+      "source": "/captures",
+      "destination": "/captures/index.html",
+      "permanent": false
+    },
+    {
+      "source": "/terms-of-service",
+      "destination": "/terms-of-service/tos.html",
+      "permanent": false
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy/privacy.html",
+      "permanent": false
+    },
+    {
+      "source": "/discord",
+      "destination": "/discord/redirect.html",
+      "permanent": false
+    },
+    {
+      "source": "/SVRP",
+      "destination": "/svrp",
+      "permanent": false
+    },
+    {
+      "source": "/svrp",
+      "destination": "/svrp/retridict.html",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "ALLOWALL"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors https://*.discord.com https://*.discordapp.com https://*.discordsays.com 'self';"
+        }
+      ]
+    }
+  ]
+}

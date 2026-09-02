@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | CaptainEXE</title>
+    
+    <meta name="description" content="Terms of Service for CaptainEXE Studios and web properties.">
+    <meta name="author" content="CaptainEXE">
+    <link rel="canonical" href="https://thecaptainexe.vercel.app/tos">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecaptainexe.vercel.app/tos">
+    <meta property="og:title" content="Terms of Service | CaptainEXE">
+    <meta property="og:description" content="Terms of Service for CaptainEXE Studios and web properties.">
+    <meta property="og:image" content="https://thecaptainexe.vercel.app/assets/logo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://thecaptainexe.vercel.app/tos">
+    <meta name="twitter:title" content="Terms of Service | CaptainEXE">
+    <meta name="twitter:description" content="Terms of Service for CaptainEXE Studios and web properties.">
+    <meta name="twitter:image" content="https://thecaptainexe.vercel.app/assets/logo.png">
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        // CONFIGURATION - FILL THIS IN
+        const config = {
+            studioName: "CaptainEXE",
+            websiteUrl: "https://thecaptainexe.vercel.app",
+            discordInvite: "https://discord.gg/BpaTBUemW3",
+            emailAddress: "hello@captainexe.annonaddy.me"
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year
+            const yearEl = document.getElementById('current-year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Inject variables
+            const elements = document.querySelectorAll('[data-var]');
+            elements.forEach(el => {
+                const varName = el.getAttribute('data-var');
+                if (config[varName]) {
+                    if (el.tagName === 'A') {
+                        el.href = el.href.replace('[INSERT]', config[varName]);
+                        if(el.textContent.includes('[INSERT]')) {
+                            el.textContent = el.textContent.replace('[INSERT]', config[varName]);
+                        }
+                    } else {
+                        el.textContent = config[varName];
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo" data-var="studioName">[STUDIO NAME]</div>
+        <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/terms-of-service/tos.html" class="active">TOS</a></li>
+    <li><a href="/privacy-policy/privacy.html">Privacy</a></li>
+
+        </ul>
+    </nav>
+    <section class="visible">
+        <h1>Terms of Service</h1>
+        <p><strong>Last Updated: June 13, 2026</strong></p>
+
+        <h2>1. Hey! Thanks for stopping by.</h2>
+        <p>Welcome to <span data-var="studioName">[STUDIO NAME]</span>! By using our websites (<a href="[INSERT]" data-var="websiteUrl">[INSERT]</a>), software, or bots (like our Discord bots - <a href="[INSERT]" data-var="discordInvite">Join here</a>), you’re agreeing to these terms. Basically, by hanging out with us online, you're saying you're cool with how we run things. If you aren't feeling these terms, you probably shouldn't use our stuff.</p>
+
+        <h2>2. The "We Aren't Lawyers" Disclaimer</h2>
+        <p><span data-var="studioName">[STUDIO NAME]</span> is just a fun project studio, not an actual registered company or legal entity. These docs are just here so everyone knows the vibe—they aren't official legal advice or a binding contract. If something goes wrong, you’re using our services at your own risk. We'll do our best to keep things running, but we aren't responsible for any issues that pop up.</p>
+
+        <h2>3. Who Can Use This?</h2>
+        <p>You’ve got to be at least 13 to use our services. If you’re between 13 and 18, hopefully, you’ve talked to your parent or guardian about it and they’re okay with you using our site and bots.</p>
+
+        <h2>4. Don't Be a Jerk</h2>
+        <p>Use our services for good, not evil.</p>
+        <ul>
+            <li><strong>Discord Bots:</strong> If you’re using our bots, stick to Discord’s rules and community guidelines. Don't be that person who abuses the system.</li>
+            <li><strong>No Hacks:</strong> Seriously, don't try to hack our bots, scrape our site, or break our code. That’s not cool.</li>
+        </ul>
+
+        <h2>5. Your Content</h2>
+        <p>If you send us feedback or post stuff in our communities, you still own it. But, you’re giving us permission to use, share, and show off that content to help run <span data-var="studioName">[STUDIO NAME]</span> better.</p>
+
+        <h2>6. If Things Break...</h2>
+        <p>We provide our stuff "as is." That means if something breaks, goes down, or doesn't work exactly right, we’re sorry, but we aren't legally liable for any damages or data loss that might happen. We’re doing our best!</p>
+
+        <h2>7. We Might Change Things</h2>
+        <p>Sometimes we need to update these terms. If we do, we’ll update this page. If you keep using our services after we change them, that means you're good with the new version.</p>
+
+        <h2>8. Got Questions?</h2>
+        <p>If you're confused or have a question about these rules, shoot us an email at <a href="mailto:[INSERT]" data-var="emailAddress">[INSERT]</a>, check out our website at <a href="[INSERT]" data-var="websiteUrl">[INSERT]</a>, or join our Discord community at <a href="[INSERT]" data-var="discordInvite">Join here</a>.</p>
+    </section>
+    <footer>
+        &copy; <span id="current-year"></span> <span data-var="studioName">[STUDIO NAME]</span>. All rights reserved.
+    </footer>
+</body>
+</html>

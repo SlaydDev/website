@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /blog/
+Disallow: /captures/
+Disallow: /clips/
+Disallow: /badges/
+
+Sitemap: https://thecaptainexe.vercel.app/sitemap.xml

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title-privacy">Privacy Policy | CaptainEXE</title>
+    
+    <meta name="description" content="Privacy Policy for CaptainEXE web properties and projects.">
+    <meta name="author" content="CaptainEXE">
+    <link rel="canonical" href="https://thecaptainexe.vercel.app/privacy">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecaptainexe.vercel.app/privacy">
+    <meta property="og:title" content="Privacy Policy | CaptainEXE">
+    <meta property="og:description" content="Privacy Policy for CaptainEXE web properties and projects.">
+    <meta property="og:image" content="https://thecaptainexe.vercel.app/assets/logo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://thecaptainexe.vercel.app/privacy">
+    <meta name="twitter:title" content="Privacy Policy | CaptainEXE">
+    <meta name="twitter:description" content="Privacy Policy for CaptainEXE web properties and projects.">
+    <meta name="twitter:image" content="https://thecaptainexe.vercel.app/assets/logo.png">
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        // CONFIGURATION - FILL THIS IN
+        const config = {
+            studioName: "CaptainEXE",
+            websiteUrl: "https://thecaptainexe.vercel.app/",
+            discordInvite: "https://discord.gg/BpaTBUemW3",
+            emailAddress: "hello@captainexe.annonaddy.me"
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year
+            const yearEl = document.getElementById('current-year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Inject variables
+            const elements = document.querySelectorAll('[data-var]');
+            elements.forEach(el => {
+                const varName = el.getAttribute('data-var');
+                if (config[varName]) {
+                    if (el.tagName === 'A') {
+                        el.href = el.href.replace('[INSERT]', config[varName]);
+                        if(el.textContent.includes('[INSERT]')) {
+                            el.textContent = el.textContent.replace('[INSERT]', config[varName]);
+                        }
+                    } else {
+                        el.textContent = config[varName];
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <div class="logo" data-var="studioName">[STUDIO NAME]</div>
+        <ul>
+    <li><a href="https://captainexe.vercel.app">Home</a></li>
+    <li><a href="https://captainexe.vercel.app/terms-of-service/tos.html">TOS</a></li>
+    <li><a href="https://captainexe.vercel.app/privacy-policy/privacy.html" class="active">Privacy</a></li>
+
+        </ul>
+    </nav>
+    <section class="visible">
+        <h1>Privacy Policy</h1>
+        <p><strong>Last Updated: June 13, 2026</strong></p>
+
+        <h2>1. What’s This About?</h2>
+        <p>Your privacy is a big deal to us. We’re <span data-var="studioName">[STUDIO NAME]</span>, and this policy explains what we do with the info we get when you use our websites (<a href="[INSERT]" data-var="websiteUrl">[INSERT]</a>), bots (join here: <a href="[INSERT]" data-var="discordInvite">Join here</a>), and chat with us. By hanging out with us, you’re cool with how we handle your data.</p>
+
+        <h2>2. A Quick Reminder</h2>
+        <p>Just like in the Terms of Service, we aren't a big legal company—we're just a group of people working on projects. This policy is us trying to be open about how we handle things, not a legal contract.</p>
+
+        <h2>3. What Info Do We Get?</h2>
+        <p>We don't want to know your whole life story.</p>
+        <ul>
+            <li><strong>Stuff You Tell Us:</strong> If you email us, give us feedback, or talk to our bots, we might see your name, email, or whatever you decide to share.</li>
+            <li><strong>Stuff We Just See:</strong> When you use our bots or site, we might see basic stuff like your IP address, what device you're on, or how you use our bot, just so we know what's working and what’s not.</li>
+        </ul>
+
+        <h2>4. How Do We Use It?</h2>
+        <p>We only use this stuff to:</p>
+        <ul>
+            <li>Make sure our sites and bots work well.</li>
+            <li>Answer your messages if you need help.</li>
+            <li>Figure out what features you guys actually like.</li>
+            <li>Make sure no one is abusing our tools.</li>
+        </ul>
+
+        <h2>5. Do We Share It?</h2>
+        <p>Nope, we aren't selling your info. That’s just not our vibe. We only share it if:</p>
+        <ul>
+            <li>You told us it’s okay.</li>
+            <li>We have to use a service (like hosting or Discord) to make our stuff work—they only see what they need to do their job.</li>
+            <li>We are legally forced to (but honestly, we hope that never happens).</li>
+        </ul>
+
+        <h2>6. Keeping Your Data Safe</h2>
+        <p>We do our best to keep your stuff safe, but hey, it’s the internet. Nothing is 100% secure forever. Just know that we’re trying our best, but proceed with that in mind.</p>
+
+        <h2>7. Users Under 13</h2>
+        <p>Our stuff isn't made for people under 13. If we find out someone under 13 gave us info, we’ll delete it as fast as we can.</p>
+
+        <h2>8. Other Sites</h2>
+        <p>If our site links to someone else, we aren't responsible for their privacy rules. Check theirs if you’re worried.</p>
+
+        <h2>9. Changes</h2>
+        <p>We might update this sometimes. If we do, we’ll change the "Last Updated" date at the top. If you’re still using our stuff after that, you’re agreeing to the new way we handle things.</p>
+
+        <h2>10. Hit Us Up</h2>
+        <p>Have questions about this? Email us at <a href="mailto:[INSERT]" data-var="emailAddress">[INSERT]</a>, visit our website at <a href="[INSERT]" data-var="websiteUrl">[INSERT]</a>, or drop by our Discord server: <a href="[INSERT]" data-var="discordInvite">Join here</a>.</p>
+    </section>
+    <footer>
+        &copy; <span id="current-year"></span> <span data-var="studioName">[STUDIO NAME]</span>. All rights reserved.
+    </footer>
+</body>
+</html>
