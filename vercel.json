@@ -8,7 +8,7 @@
     },
     {
       "source": "/contact",
-      "destination": "/contact/index.html",
+      "destination": "/contact/",
       "permanent": false
     },
     {
