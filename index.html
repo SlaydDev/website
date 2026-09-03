@@ -167,40 +167,6 @@
     </div>
   </section>
 
-  <section id="stats" class="stats">
-    <div class="stat">
-      <h3 class="counter" id="experienceYears">0</h3>
-      <p>Years Experience</p>
-    </div>
-    <div class="stat">
-      <h3 class="counter" id="projectsDone">78</h3>
-      <p>Projects Done</p>
-    </div>
-    <div class="stat">
-      <h3 class="counter" id="ongoingProjects">16</h3>
-      <p>Ongoing Projects</p>
-    </div>
-    <div class="stat">
-      <h3 class="counter" id="totalCommits">170873</h3>
-      <p>GitHub Commits</p>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="footer-container">
-      <p>&copy; 2026 CaptainEXE.</p>
-      <div class="footer-links">
-        <a href="/privacy-policy">Privacy</a>
-        <span class="separator">•</span>
-        <a href="/terms-of-service">Terms</a>
-        <span class="separator">•</span>
-        <a href="/contact">Contact</a>
-      </div>
-    </div>
-  </footer>
-
-  <button id="scrollTopBtn">↑</button>
-
 <!-- Stats Section -->
   <section id="stats" class="stats">
     <div class="stat">
@@ -284,7 +250,7 @@
         if (totalCommitsEl) totalCommitsEl.innerText = (567903 + fetchedCommits).toLocaleString();
 
       } catch (err) {
-        console.warn("GitHub stats fetch blocked or rate-limited. Falling back to base numbers as of 2026/09/03.", err);
+        console.warn("GitHub stats fetch blocked or rate-limited. Falling back to base numbers.", err);
       }
     }
 
