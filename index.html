@@ -53,7 +53,6 @@
 
 <body>
 
-  <!-- Cover Loader -->
   <div id="cover">
     <div class="cover-content">
       <h1>CaptainEXE</h1>
@@ -65,7 +64,6 @@
 
 <nav>
     <div class="logo">CaptainEXE</div>
-    <!-- Added Hamburger Menu Icon -->
     <div class="hamburger" id="hamburger">
       <i class="fas fa-bars"></i>
     </div>
@@ -79,7 +77,6 @@
     </ul>
   </nav>
 
-  <!-- Hero Section -->
   <section id="home" class="hero">
     <div class="hero-content">
       <h1>Hey, I'm Captain</h1>
@@ -170,22 +167,21 @@
     </div>
   </section>
 
-  <!-- Stats Section -->
   <section id="stats" class="stats">
     <div class="stat">
       <h3 class="counter" id="experienceYears">0</h3>
       <p>Years Experience</p>
     </div>
     <div class="stat">
-      <h3 class="counter" id="projectsDone">0</h3>
+      <h3 class="counter" id="projectsDone">78</h3>
       <p>Projects Done</p>
     </div>
     <div class="stat">
-      <h3 class="counter" id="ongoingProjects">0</h3>
+      <h3 class="counter" id="ongoingProjects">16</h3>
       <p>Ongoing Projects</p>
     </div>
     <div class="stat">
-      <h3 class="counter" id="totalCommits">0</h3>
+      <h3 class="counter" id="totalCommits">170873</h3>
       <p>GitHub Commits</p>
     </div>
   </section>
@@ -218,17 +214,18 @@
         .then(r => r.json())
         .catch(() => []);
 
+      const repoCount = Array.isArray(repos) ? repos.length : 0;
       const projectsDoneEl = document.getElementById("projectsDone");
-      if (projectsDoneEl) projectsDoneEl.innerText = Array.isArray(repos) ? repos.length : 0;
+      if (projectsDoneEl) projectsDoneEl.innerText = 78 + repoCount;
 
       const cutoff = new Date();
       cutoff.setDate(cutoff.getDate() - 14);
 
-      const ongoing = Array.isArray(repos) ? repos.filter(r => new Date(r.updated_at) > cutoff).length : 0;
+      const ongoingCount = Array.isArray(repos) ? repos.filter(r => new Date(r.updated_at) > cutoff).length : 0;
       const ongoingEl = document.getElementById("ongoingProjects");
-      if (ongoingEl) ongoingEl.innerText = ongoing;
+      if (ongoingEl) ongoingEl.innerText = 16 + ongoingCount;
 
-      let totalCommits = 0;
+      let fetchedCommits = 0;
 
       if (Array.isArray(repos)) {
         for (const repo of repos) {
@@ -239,10 +236,10 @@
             const link = res.headers.get("Link");
             if (link && link.includes('rel="last"')) {
               const match = link.match(/page=(\d+)>; rel="last"/);
-              if (match) totalCommits += parseInt(match[1]);
+              if (match) fetchedCommits += parseInt(match[1]);
             } else {
               const commits = await res.json();
-              if (Array.isArray(commits)) totalCommits += commits.length;
+              if (Array.isArray(commits)) fetchedCommits += commits.length;
             }
           } catch (e) {
             console.log("Commit fetch failed for repo:", repo.name);
@@ -251,7 +248,7 @@
       }
 
       const totalCommitsEl = document.getElementById("totalCommits");
-      if (totalCommitsEl) totalCommitsEl.innerText = totalCommits;
+      if (totalCommitsEl) totalCommitsEl.innerText = 170873 + fetchedCommits;
     }
 
     updateGitHubStats();
