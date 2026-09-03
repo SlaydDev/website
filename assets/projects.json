@@ -1,20 +1,8 @@
 [
   {
-    "title": "HTML Snippets Library",
-    "description": "A curated library of reusable website elements and creative HTML snippets — built for developers, designers, and creators.",
-    "banner": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "link": "https://github.com/thecaptainexe/HTML-library"
-  },
-  {
-    "title": "Auto Type Bot",
-    "description": "A fast, lightweight typing test that runs entirely in your browser - even offline.",
-    "banner": "https://images.unsplash.com/photo-1547394765-185e1e68f34e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "link": "https://github.com/thecaptainexe/Auto-Type"
-  },
-  {
-    "title": "OfflineType",
+    "title": "TypeEXE",
     "description": "A fast, lightweight typing test that runs entirely in your browser - even offline.",
     "banner": "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?q=80&w=1221&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "link": "https://github.com/thecaptainexe/Offline-Type"
+    "link": "https://github.com/thecaptainexe/TypeEXE"
   }
 ]

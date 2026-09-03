@@ -951,3 +951,144 @@ footer {
     grid-column: span 2;
   }
 }
+/* =========================================
+   1. MOBILE NAVIGATION RESPONSIVENESS
+   ========================================= */
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  nav ul {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 70%;
+    max-width: 300px;
+    background: rgba(10, 10, 10, 0.98);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.4s ease;
+    backdrop-filter: blur(10px);
+    border-left: 1px solid #222;
+    z-index: 1000;
+  }
+  nav ul.nav-active {
+    right: 0;
+  }
+}
+
+/* =========================================
+   2. SMOOTH TESTIMONIAL CAROUSEL
+   ========================================= */
+.testimonial-carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  height: 350px; /* Fixed height so absolute cards don't collapse */
+  overflow: hidden;
+}
+
+.testimonial-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.testimonial-card {
+  position: absolute;
+  width: 100%;
+  max-width: 400px;
+  background: #111;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* This transition is what makes it slide smoothly */
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              filter 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              z-index 0.6s step-end;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.testimonial-card.active-card {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 3;
+  pointer-events: auto;
+  background: #141416;
+  border-color: rgba(168, 85, 247, 0.3);
+  filter: blur(0);
+}
+
+.testimonial-card.prev-card {
+  opacity: 0.35;
+  transform: translateX(-70%) scale(0.85);
+  z-index: 2;
+  filter: blur(4px);
+}
+
+.testimonial-card.next-card {
+  opacity: 0.35;
+  transform: translateX(70%) scale(0.85);
+  z-index: 2;
+  filter: blur(4px);
+}
+
+@media (max-width: 900px) {
+  .testimonial-card.prev-card, .testimonial-card.next-card {
+    opacity: 0; /* Hide side cards entirely on mobile */
+  }
+}
+
+/* =========================================
+   3. TESTIMONIAL MODAL (Read More)
+   ========================================= */
+.testi-modal {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  z-index: 6000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.testi-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.testi-modal-content {
+  max-width: 600px;
+  background: #111;
+  padding: 30px;
+  border-radius: 12px;
+  line-height: 1.6;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}

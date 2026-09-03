@@ -283,13 +283,51 @@
   });
 
   // ===========================
-  // TESTIMONIALS CAROUSEL
+  // MOBILE NAVIGATION
+  // ===========================
+  const hamburger = document.getElementById('hamburger');
+  const navLinksMenu = document.getElementById('nav-links');
+  if (hamburger && navLinksMenu) {
+    hamburger.addEventListener('click', () => {
+      navLinksMenu.classList.toggle('nav-active');
+    });
+    // Auto-close menu when a link is clicked
+    navLinksMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinksMenu.classList.remove('nav-active'));
+    });
+  }
+
+  // ===========================
+  // TESTIMONIALS CAROUSEL & MODAL
   // ===========================
   const testimonialTrack = document.getElementById('testimonialTrack');
   let testimonialsData = [];
   let currentIndex = 0;
   let testimonialInterval;
+  
+  // 1. Create the Testimonial Modal dynamically
+  const testiModal = document.createElement('div');
+  testiModal.className = 'testi-modal';
+  testiModal.innerHTML = `<div class="testi-modal-content"></div>`;
+  document.body.appendChild(testiModal);
+  
+  const testiModalContent = testiModal.querySelector('.testi-modal-content');
+  
+  // Close modal logic (Click outside or hit ESC)
+  testiModal.addEventListener('click', (e) => {
+    if (e.target === testiModal) {
+      testiModal.classList.remove('active');
+      startAutoRotate(); 
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && testiModal.classList.contains('active')) {
+      testiModal.classList.remove('active');
+      startAutoRotate();
+    }
+  });
 
+  // 2. Fetch Data
   fetch('assets/testimonials.json')
     .then(res => res.json())
     .then(data => {
@@ -301,25 +339,24 @@
     })
     .catch(err => console.error("Failed to load testimonials:", err));
 
-  function renderCarousel() {
+  // 3. Render all cards to the DOM once (allows CSS smooth transitions)
+  function initCarousel() {
     if (!testimonialTrack || testimonialsData.length === 0) return;
     testimonialTrack.innerHTML = '';
-
-    const total = testimonialsData.length;
-    const leftIdx = (currentIndex - 1 + total) % total;
-    const centerIdx = currentIndex;
-    const rightIdx = (currentIndex + 1) % total;
-    const indices = [leftIdx, centerIdx, rightIdx];
-
-    indices.forEach((idx, position) => {
-      const item = testimonialsData[idx];
+    
+    testimonialsData.forEach((item, idx) => {
       const card = document.createElement('div');
-      const isCenter = position === 1;
-      card.className = `testimonial-card ${isCenter ? 'center-card' : 'side-card'}`;
+      card.className = 'testimonial-card';
+      
+      // Truncation Logic (cut off at 120 characters)
+      const limit = 120;
+      const isLong = item.testimonial.length > limit;
+      const displayText = isLong ? item.testimonial.substring(0, limit) + "..." : item.testimonial;
+      const readMoreBtn = isLong ? `<span class="read-more-btn" style="color: #a855f7; font-weight: bold; cursor: pointer;" data-idx="${idx}"> Read more</span>` : "";
 
       card.innerHTML = `
         <p class="quote-text">
-          <span class="quote-large quote-start">“</span>${item.testimonial}<span class="quote-large quote-end">”</span>
+          <span class="quote-large quote-start">“</span>${displayText}${readMoreBtn}<span class="quote-large quote-end">”</span>
         </p>
         <div class="testimonial-author">
           <img src="${item.profile_image}" alt="${item.name}">
@@ -328,24 +365,68 @@
       `;
       testimonialTrack.appendChild(card);
     });
+    
+    // Attach click events to the "Read more" buttons
+    document.querySelectorAll('.read-more-btn').forEach(btn => {
+       btn.addEventListener('click', (e) => {
+           clearInterval(testimonialInterval); // Pause carousel
+           const idx = e.target.getAttribute('data-idx');
+           const item = testimonialsData[idx];
+           
+           // Populate and show modal
+           testiModalContent.innerHTML = `
+              <p class="quote-text" style="font-size:1.1rem; color:#fff;">
+                <span class="quote-large quote-start">“</span>${item.testimonial}<span class="quote-large quote-end">”</span>
+              </p>
+              <div class="testimonial-author" style="margin-top: 20px;">
+                <img src="${item.profile_image}" alt="${item.name}" style="width:50px; height:50px; border-radius:50%; object-fit:cover;">
+                <span>${item.name}</span>
+              </div>
+           `;
+           testiModal.classList.add('active');
+       });
+    });
+    
+    updateCarouselClasses();
   }
 
-  function initCarousel() {
-    renderCarousel();
+  // 4. Update classes to trigger CSS transitions
+  function updateCarouselClasses() {
+    const cards = document.querySelectorAll('.testimonial-card');
+    const total = cards.length;
+    if(total === 0) return;
+    
+    cards.forEach((card, i) => {
+       card.className = 'testimonial-card'; // Reset
+       if (i === currentIndex) {
+           card.classList.add('active-card');
+       } else if (i === (currentIndex - 1 + total) % total) {
+           card.classList.add('prev-card');
+       } else if (i === (currentIndex + 1) % total) {
+           card.classList.add('next-card');
+       }
+    });
   }
 
   function nextTestimonial() {
     currentIndex = (currentIndex + 1) % testimonialsData.length;
-    renderCarousel();
+    updateCarouselClasses();
   }
 
   function startAutoRotate() {
+    clearInterval(testimonialInterval);
     testimonialInterval = setInterval(nextTestimonial, 3000);
   }
 
+  // Pause on hover
   const carouselContainer = document.querySelector('.testimonial-carousel-container');
   if (carouselContainer) {
     carouselContainer.addEventListener('mouseenter', () => clearInterval(testimonialInterval));
-    carouselContainer.addEventListener('mouseleave', () => startAutoRotate());
+    carouselContainer.addEventListener('mouseleave', () => {
+      // Only resume if modal isn't open
+      if (!testiModal.classList.contains('active')) {
+        startAutoRotate();
+      }
+    });
   }
 })();

@@ -1,17 +1,7 @@
 [
   {
-    "profile_image": "https://raw.githubusercontent.com/SlaydDev/website/main/badges/default.png",
-    "name": "Alex R.",
-    "testimonial": "An absolute powerhouse when it comes to clean architecture and fast delivery. Working together was seamless from start to finish."
-  },
-  {
-    "profile_image": "https://raw.githubusercontent.com/SlaydDev/website/main/badges/default.png",
-    "name": "Jordan M.",
-    "testimonial": "Incredible attention to detail. The UI design and performance tuning completely exceeded expectations."
-  },
-  {
-    "profile_image": "https://raw.githubusercontent.com/SlaydDev/website/main/badges/default.png",
-    "name": "Sam K.",
-    "testimonial": "Extremely talented developer with a sharp eye for modern aesthetics. The final product speaks for itself."
+    "profile_image": "https://cdn.discordapp.com/avatars/862147417150062622/383d97f9a9f49f24e6b496b1301d97c2.png?size=512",
+    "name": "Falcon",
+    "testimonial": "\nI want to take a moment to recognize and genuinely thank Captain for the incredible work he has put into developing our server bot. From the very beginning, he approached the project with patience, professionalism, and a level of dedication that is honestly rare to see.\n\nWhat stood out the most was not just his technical skill, but the consistency and care he brought into every detail. He worked tirelessly to make sure everything functioned smoothly, handled challenges quickly, and always made improvements with the server’s needs in mind. No matter how complex the request was, he found a way to bring it to life and make it better than expected.\n\nCaptain didn’t just build a bot — he built a reliable system that genuinely improved the way our community operates. His work has had a real impact, and it’s clear he takes pride in what he creates.\n\nWe are truly grateful for his time, effort, and commitment. Working with him has been an outstanding experience, and he has earned our full respect and appreciation. "
   }
 ]
